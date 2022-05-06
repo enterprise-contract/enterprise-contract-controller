@@ -1,4 +1,4 @@
-module github.com/hacbs-contract/ecpc
+module github.com/hacbs-contract/enterprise-contract-controller
 
 go 1.17
 

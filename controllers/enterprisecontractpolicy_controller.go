@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	appstudioredhatcomv1alpha1 "github.com/hacbs-contract/ecpc/api/v1alpha1"
+	appstudioredhatcomv1alpha1 "github.com/hacbs-contract/enterprise-contract-controller/api/v1alpha1"
 )
 
 // EnterpriseContractPolicyReconciler reconciles a EnterpriseContractPolicy object
