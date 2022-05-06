@@ -1,0 +1,16 @@
+domain: redhat.com
+layout:
+- go.kubebuilder.io/v3
+projectName: ecpc
+repo: github.com/hacbs-contract/ecpc
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: redhat.com
+  group: appstudio
+  kind: EnterpriseContractPolicy
+  path: github.com/hacbs-contract/ecpc/api/v1alpha1
+  version: v1alpha1
+version: "3"

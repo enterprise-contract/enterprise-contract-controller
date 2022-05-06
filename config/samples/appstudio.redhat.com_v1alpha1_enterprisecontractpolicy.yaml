@@ -1,0 +1,13 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: EnterpriseContractPolicy
+metadata:
+  name: enterprisecontractpolicy-sample
+spec:
+  description: My custom enterprise contract policy configuration
+  sources:
+    - git:
+        repository: https://github.com/hacbs/ec-policy
+  exceptions:
+    nonBlocking:
+      - not_useful
+      - test:conftest-clair
