@@ -1,8 +1,9 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+IMG ?= enterprise-contract-controller:latest
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.23
+DOCKER_CONFIG ?= $(HOME)
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
@@ -71,7 +72,14 @@ run: manifests generate fmt vet ## Run a controller from your host.
 
 .PHONY: docker-build
 docker-build: test ## Build docker image with the manager.
+ifeq ("$(shell docker info --format '{{$$found:=false}}{{range .ClientInfo.Plugins}}{{if eq .Name "buildx"}}{{$$found = true}}{{end}}{{end}}{{if $$found}}true{{else}}false{{end}}')","true")
+	docker buildx create --use
+	docker buildx build --load -t ${IMG} --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max .
+	docker buildx stop
+	docker buildx rm
+else
 	docker build -t ${IMG} .
+endif
 
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.
