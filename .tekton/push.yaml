@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: ec-controller-on-push
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[push]"
+    pipelinesascode.tekton.dev/on-target-branch: "[main]"
+    pipelinesascode.tekton.dev/max-keep-runs: "5"
+spec:
+  params:
+    - name: git-url
+      value: "{{repo_url}}"
+    - name: revision
+      value: "{{revision}}"
+    - name: output-image
+      value: 'quay.io/redhat-appstudio/enterprise-contract-controller:{{revision}}'
+    - name: infra-deployment-update-script
+      value: |
+        sed -i -e 's|\(https://github.com/hacbs-contract/enterprise-contract-controller/.*?ref=\)\(.*\)|\1{{ revision }}|' -e 's/\(newTag: \).*/\1{{ revision }}/' components/enterprise-contract/kustomization.yaml
+  pipelineRef:
+    name: docker-build
+    bundle: quay.io/redhat-appstudio/hacbs-core-service-templates-bundle:latest
+  workspaces:
+    - name: workspace
+      persistentVolumeClaim:
+        claimName: app-studio-default-workspace
+      subPath: ec-controller-push-{{ revision }}
