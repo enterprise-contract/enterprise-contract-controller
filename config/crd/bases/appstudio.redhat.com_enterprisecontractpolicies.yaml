@@ -81,10 +81,10 @@ spec:
               authorization:
                 description: List of image digests authorized to release
                 properties:
-                  commitSha:
+                  changeId:
                     description: The commit sha
                     type: string
-                  repoUrl:
+                  repository:
                     description: The repo url containing the component sources
                     type: string
                   authorizer:

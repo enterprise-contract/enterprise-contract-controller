@@ -40,8 +40,8 @@ type EnterpriseContractPolicySpec struct {
 
 // Authorization represents an image that has been authorized for release
 type Authorization struct {
-	CommitSha  string `json:"commitSha"`
-	RepoUrl    string `json:"repoUrl"`
+	ChangeID   string `json:"changeId"`
+	Repository string `json:"repository"`
 	Authorizer string `json:"authorizer"`
 }
 
