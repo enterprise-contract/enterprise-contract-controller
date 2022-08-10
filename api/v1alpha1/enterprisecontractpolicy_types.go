@@ -37,6 +37,12 @@ type EnterpriseContractPolicySpec struct {
 	// Exceptions configures exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
 	// +optional
 	Exceptions *EnterpriseContractPolicyExceptions `json:"exceptions,omitempty"`
+	// URL of the Rekor instance. Empty string disables Rekor integration
+	// +optional
+	RekorUrl string `json:"rekorUrl"`
+	// Public key used to validate the signature of images and attestations
+	// +optional
+	PublicKey string `json:"publicKey"`
 }
 
 // Authorization represents an image that has been authorized for release
