@@ -39,6 +39,19 @@ spec:
             description: EnterpriseContractPolicySpec represents the desired state
               of EnterpriseContractPolicy
             properties:
+              authorization:
+                description: List of image digests authorized to release
+                properties:
+                  authorizer:
+                    description: The email address of the person authorizing the release
+                    type: string
+                  changeId:
+                    description: The commit sha
+                    type: string
+                  repository:
+                    description: The repo url containing the component sources
+                    type: string
+                type: object
               description:
                 description: Description text describing the the policy or it's intended
                   use
@@ -78,19 +91,6 @@ spec:
                   type: object
                 minItems: 1
                 type: array
-              authorization:
-                description: List of image digests authorized to release
-                properties:
-                  changeId:
-                    description: The commit sha
-                    type: string
-                  repository:
-                    description: The repo url containing the component sources
-                    type: string
-                  authorizer:
-                    description: The email address of the person authorizting the release
-                    type: string
-                type: object
             required:
             - sources
             type: object

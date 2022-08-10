@@ -31,7 +31,8 @@ type EnterpriseContractPolicySpec struct {
 	// Sources is list of policy sources
 	// +kubebuilder:validation:MinItems:=1
 	Sources []PolicySource `json:"sources"`
-	// release authorization
+	// List of image digests authorized to release
+	// +optional
 	Authorization Authorization `json:"authorization"`
 	// Exceptions configures exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
 	// +optional
@@ -40,8 +41,14 @@ type EnterpriseContractPolicySpec struct {
 
 // Authorization represents an image that has been authorized for release
 type Authorization struct {
-	ChangeID   string `json:"changeId"`
+	// The commit sha
+	// +optional
+	ChangeID string `json:"changeId"`
+	// The repo url containing the component sources
+	// +optional
 	Repository string `json:"repository"`
+	// The email address of the person authorizing the release
+	// +optional
 	Authorizer string `json:"authorizer"`
 }
 
