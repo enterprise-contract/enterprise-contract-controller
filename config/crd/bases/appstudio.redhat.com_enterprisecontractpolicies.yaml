@@ -67,6 +67,14 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                 type: object
+              publicKey:
+                description: Public key used to validate the signature of images and
+                  attestations
+                type: string
+              rekorUrl:
+                description: URL of the Rekor instance. Empty string disables Rekor
+                  integration
+                type: string
               sources:
                 description: Sources is list of policy sources
                 items:
