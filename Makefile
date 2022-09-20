@@ -43,6 +43,7 @@ help: ## Display this help.
 .PHONY: manifests
 manifests: controller-gen ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
 	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths="./..." output:crd:artifacts:config=config/crd/bases
+	hack/generate-kcp-api.sh ## Generate KCP APIExport and APIResourceSchemas from CRDs
 
 .PHONY: generate
 generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.

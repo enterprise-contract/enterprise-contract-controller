@@ -19,7 +19,10 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@v3.0.0
         with:
-          go-version: 1.17
+          go-version: 1.18
+
+      - name: install kubectl-kcp
+        run: curl -L https://github.com/kcp-dev/kcp/releases/download/v0.8.2/kubectl-kcp-plugin_0.8.2_linux_amd64.tar.gz | tar -xz -C $HOME/go
 
       - name: Cache dependencies
         uses: actions/cache@v3

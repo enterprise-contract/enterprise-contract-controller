@@ -1,0 +1,111 @@
+apiVersion: apis.kcp.dev/v1alpha1
+kind: APIResourceSchema
+metadata:
+  creationTimestamp: null
+  name: md5-ae59a74660e4b224635dc36a8bb18143.enterprisecontractpolicies.appstudio.redhat.com
+spec:
+  group: appstudio.redhat.com
+  names:
+    kind: EnterpriseContractPolicy
+    listKind: EnterpriseContractPolicyList
+    plural: enterprisecontractpolicies
+    shortNames:
+    - ecp
+    singular: enterprisecontractpolicy
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      description: EnterpriseContractPolicy is the Schema for the enterprisecontractpolicies
+        API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: EnterpriseContractPolicySpec represents the desired state of
+            EnterpriseContractPolicy
+          properties:
+            authorization:
+              description: List of image digests authorized to release
+              properties:
+                authorizer:
+                  description: The email address of the person authorizing the release
+                  type: string
+                changeId:
+                  description: The commit sha
+                  type: string
+                repository:
+                  description: The repo url containing the component sources
+                  type: string
+              type: object
+            description:
+              description: Description text describing the the policy or it's intended
+                use
+              type: string
+            exceptions:
+              description: Exceptions configures exceptions under which the policy
+                is evaluated as successful even if the listed policy checks have reported
+                failure
+              properties:
+                nonBlocking:
+                  items:
+                    type: string
+                  type: array
+                  x-kubernetes-list-type: set
+              type: object
+            publicKey:
+              description: Public key used to validate the signature of images and
+                attestations
+              type: string
+            rekorUrl:
+              description: URL of the Rekor instance. Empty string disables Rekor
+                integration
+              type: string
+            sources:
+              description: Sources is list of policy sources
+              items:
+                description: PolicySource represents the configuration of the source
+                  for the policy
+                properties:
+                  git:
+                    description: GitRepository configures fetching of the policies
+                      from a Git repository
+                    properties:
+                      repository:
+                        description: Repository URL
+                        type: string
+                      revision:
+                        default: main
+                        description: Revision matching the branch, commit id or similar
+                          to fetch. Defaults to `main`
+                        type: string
+                    required:
+                    - repository
+                    type: object
+                type: object
+              minItems: 1
+              type: array
+          required:
+          - sources
+          type: object
+        status:
+          description: EnterpriseContractPolicyStatus defines the observed state of
+            EnterpriseContractPolicy
+          type: object
+      type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+
+---
