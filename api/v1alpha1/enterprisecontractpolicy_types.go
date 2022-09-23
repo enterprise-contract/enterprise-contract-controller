@@ -31,7 +31,7 @@ type EnterpriseContractPolicySpec struct {
 	// Sources is list of policy sources
 	// +kubebuilder:validation:MinItems:=1
 	Sources []PolicySource `json:"sources"`
-	// List of image digests authorized to release
+	// Authorization defines a release approval
 	// +optional
 	Authorization Authorization `json:"authorization"`
 	// Exceptions configures exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
@@ -45,7 +45,7 @@ type EnterpriseContractPolicySpec struct {
 	PublicKey string `json:"publicKey"`
 }
 
-// Authorization represents an image that has been authorized for release
+// Authorization defines a release approval
 type Authorization struct {
 	// The commit sha
 	// +optional

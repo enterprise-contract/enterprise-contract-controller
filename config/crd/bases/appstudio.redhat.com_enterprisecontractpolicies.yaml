@@ -40,7 +40,7 @@ spec:
               of EnterpriseContractPolicy
             properties:
               authorization:
-                description: List of image digests authorized to release
+                description: Authorization defines a release approval
                 properties:
                   authorizer:
                     description: The email address of the person authorizing the release
