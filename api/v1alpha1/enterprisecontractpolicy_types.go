@@ -47,6 +47,13 @@ type EnterpriseContractPolicySpec struct {
 
 // Authorization defines a release approval
 type Authorization struct {
+	// The authorized component
+	// +optional
+	Components []AuthorizedComponent `json:"components"`
+}
+
+// Authorization defines a release approval on a component basis
+type AuthorizedComponent struct {
 	// The commit sha
 	// +optional
 	ChangeID string `json:"changeId"`
