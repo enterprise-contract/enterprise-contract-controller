@@ -1,6 +1,6 @@
 module github.com/hacbs-contract/enterprise-contract-controller
 
-go 1.17
+go 1.18
 
 require (
 	github.com/kcp-dev/kcp v0.9.0
