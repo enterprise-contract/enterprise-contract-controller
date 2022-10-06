@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-bea5a87f3b5135e66c6a970f1d834ef7.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-57ac173b5f76d25c433dcfa3b994e412.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -38,15 +38,24 @@ spec:
             authorization:
               description: Authorization defines a release approval
               properties:
-                authorizer:
-                  description: The email address of the person authorizing the release
-                  type: string
-                changeId:
-                  description: The commit sha
-                  type: string
-                repository:
-                  description: The repo url containing the component sources
-                  type: string
+                components:
+                  description: The authorized component
+                  items:
+                    description: Authorization defines a release approval on a component
+                      basis
+                    properties:
+                      authorizer:
+                        description: The email address of the person authorizing the
+                          release
+                        type: string
+                      changeId:
+                        description: The commit sha
+                        type: string
+                      repository:
+                        description: The repo url containing the component sources
+                        type: string
+                    type: object
+                  type: array
               type: object
             description:
               description: Description text describing the the policy or it's intended
