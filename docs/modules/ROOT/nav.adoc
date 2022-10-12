@@ -1,2 +1,2 @@
-* xref:index.adoc[About Enterprise Contract Policy]
+* xref:index.adoc[About Enterprise Contract Configuration]
 * xref:reference.adoc[Reference]
