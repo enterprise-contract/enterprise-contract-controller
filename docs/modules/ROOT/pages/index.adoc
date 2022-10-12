@@ -1,0 +1,55 @@
+= About Enterprise Contract Policy
+
+The HACBS Enterprise Contract Policy defines the configuration for the
+enforcement of the Enterprise Contract policy by specifying rules and
+authorizations needed for a container image built in HACKBS to be compliant with
+organization's software release policy requirements.
+
+The Enterprise Contract Policy is passed in the form of a configuration to the
+xref:ec-cli:ROOT:index.adoc[EC CLI] to
+parameterize its execution in the enforcement of the set policy.
+
+== How to create Enterprise Contract Policy
+
+When creating Enterprise Contract Policy first make note of what rule sources to
+include, any authorization approval requirements and the public key needed to
+validate the image and attestation image signatures.
+
+=== As a JSON file
+
+The resulting data is placed in a JSON document with the following structure:
+
+.policy.json
+[source,json]
+----
+include::example$spec-example.json[]
+----
+
+Consult the
+xref:reference.adoc#k8s-api-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[the
+EnterpriseContractPolicySpec reference] documentation for details on the
+structure of this document.
+
+The policy in JSON format can be passed in directly to the `ec` command line
+using the `-p`/`--policy` option, for example in the
+xref:ec-cli:ROOT:ec_validate_image.adoc[`validate image`] command.
+
+=== As a Kubernetes Custom Resource
+
+It is more common to create the Enterprise Contract Policy as a Kubernetes
+Custom Resource and pass the reference to the namespace and the name of the
+Custom Resource to the `-p`/`--policy` option. This has the advantage that the
+policy is centraly defined and served from the Kubernetes API server with the
+additional benefit of applying role based access control.
+
+.policy.yaml
+[source,yaml]
+----
+include::example$k8s-example.yaml[]
+----
+
+.Create Enterprise Contract Policy using `kubectl`
+[source,shell]
+----
+kubectl apply -f policy.yaml
+----

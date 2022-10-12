@@ -19,7 +19,7 @@ SHELL = /usr/bin/env bash -o pipefail
 .SHELLFLAGS = -ec
 
 .PHONY: all
-all: build manifests
+all: build manifests docs
 
 ##@ General
 
@@ -39,6 +39,11 @@ help: ## Display this help.
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 ##@ Development
+
+.PHONY: docs
+docs: $(wildcard api/v1alpha1/*.go) ## Generate documentation
+	@go run github.com/elastic/crd-ref-docs --config=docs/config.yaml --source-path=./api/v1alpha1 --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
+	@go run ./docs
 
 .PHONY: manifests
 manifests: controller-gen kcp-manifests ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
