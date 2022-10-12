@@ -16,7 +16,7 @@
 
 ---
 name: ecc
-title: Enterprise Contract
+title: Enterprise Contract Configuration
 version: main
 nav:
-- modules/ROOT/nav.adoc
+  - modules/ROOT/nav.adoc
