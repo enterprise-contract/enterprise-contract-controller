@@ -23,46 +23,46 @@ import (
 // Important: Run "make" to regenerate code after modifying this file
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// EnterpriseContractPolicySpec represents the desired state of EnterpriseContractPolicy
+// EnterpriseContractPolicySpec is used to configure the Enterprise Contract Policy
 type EnterpriseContractPolicySpec struct {
-	// Description text describing the the policy or it's intended use
+	// Description of the policy or it's intended use
 	// +optional
-	Description *string `json:"description"`
-	// Sources is list of policy sources
+	Description string `json:"description,omitempty"`
+	// Sources of the policy
 	// +kubebuilder:validation:MinItems:=1
 	Sources []PolicySource `json:"sources"`
-	// Authorization defines a release approval
+	// Authorization for per component release approvals
 	// +optional
-	Authorization Authorization `json:"authorization"`
-	// Exceptions configures exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
+	Authorization *Authorization `json:"authorization,omitempty"`
+	// Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
 	// +optional
 	Exceptions *EnterpriseContractPolicyExceptions `json:"exceptions,omitempty"`
 	// URL of the Rekor instance. Empty string disables Rekor integration
 	// +optional
-	RekorUrl string `json:"rekorUrl"`
+	RekorUrl string `json:"rekorUrl,omitempty"`
 	// Public key used to validate the signature of images and attestations
 	// +optional
-	PublicKey string `json:"publicKey"`
+	PublicKey string `json:"publicKey,omitempty"`
 }
 
 // Authorization defines a release approval
 type Authorization struct {
-	// The authorized component
+	// Components based authorization
 	// +optional
-	Components []AuthorizedComponent `json:"components"`
+	Components []AuthorizedComponent `json:"components,omitempty"`
 }
 
 // Authorization defines a release approval on a component basis
 type AuthorizedComponent struct {
-	// The commit sha
+	// ChangeID is the identifier of the change, e.g. git commit id
 	// +optional
-	ChangeID string `json:"changeId"`
-	// The repo url containing the component sources
+	ChangeID string `json:"changeId,omitempty"`
+	// Repository of the component sources
 	// +optional
-	Repository string `json:"repository"`
-	// The email address of the person authorizing the release
+	Repository string `json:"repository,omitempty"`
+	// Authorizer is the email address of the person authorizing the release
 	// +optional
-	Authorizer string `json:"authorizer"`
+	Authorizer string `json:"authorizer,omitempty"`
 }
 
 // PolicySource represents the configuration of the source for the policy
@@ -78,11 +78,13 @@ type GitPolicySource struct {
 	// Revision matching the branch, commit id or similar to fetch. Defaults to `main`
 	// +kubebuilder:default:=main
 	// +optional
-	Revision *string `json:"revision"`
+	Revision string `json:"revision,omitempty"`
 }
 
 // EnterpriseContractPolicyExceptions configuration of exceptions for the policy evaluation
 type EnterpriseContractPolicyExceptions struct {
+	// NonBlocking set of policy exceptions that in case of failure do not block
+	// the success of the outcome
 	// +optional
 	// +listType:=set
 	NonBlocking []string `json:"nonBlocking,omitempty"`
