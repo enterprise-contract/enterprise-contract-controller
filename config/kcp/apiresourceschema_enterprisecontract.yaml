@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-57ac173b5f76d25c433dcfa3b994e412.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-f44dd3a1754603dac10d033190e13233.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -32,11 +32,11 @@ spec:
         metadata:
           type: object
         spec:
-          description: EnterpriseContractPolicySpec represents the desired state of
-            EnterpriseContractPolicy
+          description: EnterpriseContractPolicySpec is used to configure the Enterprise
+            Contract Policy
           properties:
             authorization:
-              description: Authorization defines a release approval
+              description: Authorization defines per component release approvals
               properties:
                 components:
                   description: The authorized component
@@ -58,8 +58,7 @@ spec:
                   type: array
               type: object
             description:
-              description: Description text describing the the policy or it's intended
-                use
+              description: Arbitrary description of the policy or it's intended use
               type: string
             exceptions:
               description: Exceptions configures exceptions under which the policy
@@ -81,7 +80,7 @@ spec:
                 integration
               type: string
             sources:
-              description: Sources is list of policy sources
+              description: One or more policy sources
               items:
                 description: PolicySource represents the configuration of the source
                   for the policy

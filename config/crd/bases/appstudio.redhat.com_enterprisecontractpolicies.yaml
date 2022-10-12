@@ -36,41 +36,42 @@ spec:
           metadata:
             type: object
           spec:
-            description: EnterpriseContractPolicySpec represents the desired state
-              of EnterpriseContractPolicy
+            description: EnterpriseContractPolicySpec is used to configure the Enterprise
+              Contract Policy
             properties:
               authorization:
-                description: Authorization defines a release approval
+                description: Authorization for per component release approvals
                 properties:
                   components:
-                    description: The authorized component
+                    description: Components based authorization
                     items:
                       description: Authorization defines a release approval on a component
                         basis
                       properties:
                         authorizer:
-                          description: The email address of the person authorizing
-                            the release
+                          description: Authorizer is the email address of the person
+                            authorizing the release
                           type: string
                         changeId:
-                          description: The commit sha
+                          description: ChangeID is the identifier of the change, e.g.
+                            git commit id
                           type: string
                         repository:
-                          description: The repo url containing the component sources
+                          description: Repository of the component sources
                           type: string
                       type: object
                     type: array
                 type: object
               description:
-                description: Description text describing the the policy or it's intended
-                  use
+                description: Description of the policy or it's intended use
                 type: string
               exceptions:
-                description: Exceptions configures exceptions under which the policy
-                  is evaluated as successful even if the listed policy checks have
-                  reported failure
+                description: Exceptions under which the policy is evaluated as successful
+                  even if the listed policy checks have reported failure
                 properties:
                   nonBlocking:
+                    description: NonBlocking set of policy exceptions that in case
+                      of failure do not block the success of the outcome
                     items:
                       type: string
                     type: array
@@ -85,7 +86,7 @@ spec:
                   integration
                 type: string
               sources:
-                description: Sources is list of policy sources
+                description: Sources of the policy
                 items:
                   description: PolicySource represents the configuration of the source
                     for the policy
