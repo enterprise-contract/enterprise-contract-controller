@@ -15,11 +15,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //go:build tools
-// +build tools
 
 // Tracks tooling dependencies, i.e. those that are not used by the code directly
 package tools
 
 import (
 	_ "github.com/kcp-dev/kcp/cmd/kubectl-kcp"
+	_ "github.com/elastic/crd-ref-docs"
 )

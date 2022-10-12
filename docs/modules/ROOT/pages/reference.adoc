@@ -1,0 +1,161 @@
+// Generated documentation. Please do not edit.
+:anchor_prefix: k8s-api
+
+[id="api-reference"]
+== API Reference
+
+.Packages
+- xref:{anchor_prefix}-appstudio-redhat-com-v1alpha1[$$appstudio.redhat.com/v1alpha1$$]
+
+
+[id="{anchor_prefix}-appstudio-redhat-com-v1alpha1"]
+=== appstudio.redhat.com/v1alpha1
+
+Package v1alpha1 contains API Schema definitions for the appstudio.redhat.com v1alpha1 API group
+
+.Resource Types
+- xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy[$$EnterpriseContractPolicy$$]
+- xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicylist[$$EnterpriseContractPolicyList$$]
+
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization"]
+==== Authorization 
+
+Authorization defines a release approval
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`components`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorizedcomponent[$$AuthorizedComponent$$] array__ | Components based authorization
+|===
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorizedcomponent"]
+==== AuthorizedComponent 
+
+Authorization defines a release approval on a component basis
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`changeId`* __string__ | ChangeID is the identifier of the change, e.g. git commit id
+| *`repository`* __string__ | Repository of the component sources
+| *`authorizer`* __string__ | Authorizer is the email address of the person authorizing the release
+|===
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy"]
+==== EnterpriseContractPolicy 
+
+EnterpriseContractPolicy is the Schema for the enterprisecontractpolicies API
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicylist[$$EnterpriseContractPolicyList$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`apiVersion`* __string__ | `appstudio.redhat.com/v1alpha1`
+| *`kind`* __string__ | `EnterpriseContractPolicy`
+| *`TypeMeta`* __link:https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#typemeta-v1-meta[$$TypeMeta$$]__ | 
+| *`metadata`* __link:https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#objectmeta-v1-meta[$$ObjectMeta$$]__ | Refer to Kubernetes API documentation for fields of `metadata`.
+
+| *`spec`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]__ | 
+| *`status`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicystatus[$$EnterpriseContractPolicyStatus$$]__ | 
+|===
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions"]
+==== EnterpriseContractPolicyExceptions 
+
+EnterpriseContractPolicyExceptions configuration of exceptions for the policy evaluation
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`nonBlocking`* __string array__ | NonBlocking set of policy exceptions that in case of failure do not block the success of the outcome
+|===
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicylist"]
+==== EnterpriseContractPolicyList 
+
+EnterpriseContractPolicyList contains a list of EnterpriseContractPolicy
+
+
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`apiVersion`* __string__ | `appstudio.redhat.com/v1alpha1`
+| *`kind`* __string__ | `EnterpriseContractPolicyList`
+| *`TypeMeta`* __link:https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#typemeta-v1-meta[$$TypeMeta$$]__ | 
+| *`metadata`* __link:https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#listmeta-v1-meta[$$ListMeta$$]__ | Refer to Kubernetes API documentation for fields of `metadata`.
+
+| *`items`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy[$$EnterpriseContractPolicy$$] array__ | 
+|===
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec"]
+==== EnterpriseContractPolicySpec 
+
+EnterpriseContractPolicySpec is used to configure the Enterprise Contract Policy
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy[$$EnterpriseContractPolicy$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`description`* __string__ | Description of the policy or it's intended use
+| *`sources`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource[$$PolicySource$$] array__ | Sources of the policy
+| *`authorization`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]__ | Authorization for per component release approvals
+| *`exceptions`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions[$$EnterpriseContractPolicyExceptions$$]__ | Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
+| *`rekorUrl`* __string__ | URL of the Rekor instance. Empty string disables Rekor integration
+| *`publicKey`* __string__ | Public key used to validate the signature of images and attestations
+|===
+
+
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-gitpolicysource"]
+==== GitPolicySource 
+
+
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource[$$PolicySource$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`repository`* __string__ | Repository URL
+| *`revision`* __string__ | Revision matching the branch, commit id or similar to fetch. Defaults to `main`
+|===
+
+
+[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource"]
+==== PolicySource 
+
+PolicySource represents the configuration of the source for the policy
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`git`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-gitpolicysource[$$GitPolicySource$$]__ | GitRepository configures fetching of the policies from a Git repository
+|===
+
+

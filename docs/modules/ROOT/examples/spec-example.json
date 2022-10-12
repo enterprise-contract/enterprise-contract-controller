@@ -1,0 +1,17 @@
+{
+  "description": "ACME & co policy",
+  "sources": [
+    {
+      "git": {
+        "repository": "https://github.com/acme/ec-policy.git",
+        "revision": "production"
+      }
+    }
+  ],
+  "exceptions": {
+    "nonBlocking": [
+      "friday_policy",
+      "room_temperature"
+    ]
+  }
+}
