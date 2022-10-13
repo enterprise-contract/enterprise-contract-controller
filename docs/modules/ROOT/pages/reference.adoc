@@ -135,7 +135,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 |===
 | Field | Description
 | *`description`* __string__ | Description of the policy or it's intended use
-| *`sources`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource[$$PolicySource$$] array__ | Sources of the policy
+| *`sources`* __string array__ | One or more source urls for the policy rules
 | *`authorization`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]__ | Authorization for per component release approvals
 | *`exceptions`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions[$$EnterpriseContractPolicyExceptions$$]__ | Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
 | *`configuration`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (collections, exclusions, inclusions)
@@ -144,36 +144,5 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 |===
 
 
-
-
-[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-gitpolicysource"]
-==== GitPolicySource
-
-
-
-[quote]
-Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource[$$PolicySource$$]
-
-[cols="25a,75a", options="header"]
-|===
-| Field | Description
-| *`repository`* __string__ | Repository URL
-| *`revision`* __string__ | Revision matching the branch, commit id or similar to fetch. Defaults to `main`
-|===
-
-
-[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource"]
-==== PolicySource
-
-PolicySource represents the configuration of the source for the policy
-
-[quote]
-Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
-
-[cols="25a,75a", options="header"]
-|===
-| Field | Description
-| *`git`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-gitpolicysource[$$GitPolicySource$$]__ | GitRepository configures fetching of the policies from a Git repository
-|===
 
 

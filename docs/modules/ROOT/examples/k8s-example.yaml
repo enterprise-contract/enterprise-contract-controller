@@ -11,7 +11,5 @@ spec:
     - friday_policy
     - room_temperature
   sources:
-  - git:
-      repository: https://github.com/acme/ec-policy.git
-      revision: production
+  - git::https://github.com/acme/ec-policy.git//policy?ref=prod
 status: {}
