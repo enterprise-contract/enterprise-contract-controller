@@ -90,6 +90,24 @@ type EnterpriseContractPolicyExceptions struct {
 	NonBlocking []string `json:"nonBlocking,omitempty"`
 }
 
+// EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
+type EnterpriseContractPolicyConfiguration struct {
+	// ExcludeRules set of policy exclusions that, in case of failure, do not block
+	// the success of the outcome.
+	// +optional
+	// +listType:=set
+	ExcludeRules []string `json:"excludeRules,omitempty"`
+	// IncludeRules set of policy inclusions that are added to the policy evaluation.
+	// These override excluded rules.
+	// +optional
+	// +listType:=set
+	IncludeRules []string `json:"includeRules,omitempty"`
+	// Collections set of predefined rules.
+	// +optional
+	// +listType:=set
+	Collections []string `json:"collection;omitempty"`
+}
+
 // EnterpriseContractPolicyStatus defines the observed state of EnterpriseContractPolicy
 type EnterpriseContractPolicyStatus struct {
 	// TODO what to add here?

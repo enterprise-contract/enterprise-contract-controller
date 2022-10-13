@@ -62,6 +62,26 @@ spec:
                       type: object
                     type: array
                 type: object
+              configuration:
+                description: Configuration handles policy modification configuration
+                  (collections, exclusions, inclusions)
+                properties:
+                  collection;omitempty:
+                    items:
+                      type: string
+                    type: array
+                  excludeRules:
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  includeRules:
+                    items:
+                      type: string
+                    type: array
+                required:
+                  - collection;omitempty
+                type: object
               description:
                 description: Description of the policy or it's intended use
                 type: string

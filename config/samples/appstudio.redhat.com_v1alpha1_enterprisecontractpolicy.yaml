@@ -7,7 +7,15 @@ spec:
   sources:
     - git:
         repository: https://github.com/hacbs-contract/ec-policies
-  exceptions:
-    nonBlocking:
+  exceptions: # Deprecated. Use configuration as seen below
+    nonBlocking: # Deprecated. Use excludeRules as seen below
       - not_useful
       - test:conftest-clair
+  configuration:
+    excludeRules:
+      - not_useful
+      - test:conftest-clair
+    includeRules:
+      - always_checked
+    collections:
+      - salsa_one_collection
