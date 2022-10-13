@@ -20,7 +20,7 @@ Package v1alpha1 contains API Schema definitions for the appstudio.redhat.com v1
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization"]
-==== Authorization 
+==== Authorization
 
 Authorization defines a release approval
 
@@ -35,7 +35,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorizedcomponent"]
-==== AuthorizedComponent 
+==== AuthorizedComponent
 
 Authorization defines a release approval on a component basis
 
@@ -52,7 +52,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy"]
-==== EnterpriseContractPolicy 
+==== EnterpriseContractPolicy
 
 EnterpriseContractPolicy is the Schema for the enterprisecontractpolicies API
 
@@ -73,7 +73,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration"]
-==== EnterpriseContractPolicyConfiguration 
+==== EnterpriseContractPolicyConfiguration
 
 EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
 
@@ -90,7 +90,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions"]
-==== EnterpriseContractPolicyExceptions 
+==== EnterpriseContractPolicyExceptions
 
 EnterpriseContractPolicyExceptions configuration of exceptions for the policy evaluation
 
@@ -105,7 +105,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicylist"]
-==== EnterpriseContractPolicyList 
+==== EnterpriseContractPolicyList
 
 EnterpriseContractPolicyList contains a list of EnterpriseContractPolicy
 
@@ -124,7 +124,7 @@ EnterpriseContractPolicyList contains a list of EnterpriseContractPolicy
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec"]
-==== EnterpriseContractPolicySpec 
+==== EnterpriseContractPolicySpec
 
 EnterpriseContractPolicySpec is used to configure the Enterprise Contract Policy
 
@@ -147,7 +147,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-gitpolicysource"]
-==== GitPolicySource 
+==== GitPolicySource
 
 
 
@@ -163,7 +163,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 
 
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-policysource"]
-==== PolicySource 
+==== PolicySource
 
 PolicySource represents the configuration of the source for the policy
 
