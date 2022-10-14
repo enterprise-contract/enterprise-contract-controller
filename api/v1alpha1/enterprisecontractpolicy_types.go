@@ -108,7 +108,7 @@ type EnterpriseContractPolicyConfiguration struct {
 	// Collections set of predefined rules.
 	// +optional
 	// +listType:=set
-	Collections []string `json:"collections;omitempty"`
+	Collections []string `json:"collections,omitempty"`
 }
 
 // EnterpriseContractPolicyStatus defines the observed state of EnterpriseContractPolicy
