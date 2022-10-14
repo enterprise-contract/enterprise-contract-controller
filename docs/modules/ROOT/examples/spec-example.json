@@ -1,12 +1,7 @@
 {
   "description": "ACME & co policy",
   "sources": [
-    {
-      "git": {
-        "repository": "https://github.com/acme/ec-policy.git",
-        "revision": "production"
-      }
-    }
+    "git::https://github.com/acme/ec-policy.git//policy?ref=prod"
   ],
   "exceptions": {
     "nonBlocking": [

@@ -15,13 +15,8 @@ import (
 func simplePolicy() *ecc.EnterpriseContractPolicySpec {
 	return &ecc.EnterpriseContractPolicySpec{
 		Description: "ACME & co policy",
-		Sources: []ecc.PolicySource{
-			{
-				GitRepository: &ecc.GitPolicySource{
-					Repository: "https://github.com/acme/ec-policy.git",
-					Revision:   "production",
-				},
-			},
+		Sources: []string{
+			"git::https://github.com/acme/ec-policy.git//policy?ref=prod",
 		},
 		Exceptions: &ecc.EnterpriseContractPolicyExceptions{
 			NonBlocking: []string{

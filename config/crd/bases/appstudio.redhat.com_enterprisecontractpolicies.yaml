@@ -111,27 +111,9 @@ spec:
                   integration
                 type: string
               sources:
-                description: Sources of the policy
+                description: One or more source urls for the policy rules
                 items:
-                  description: PolicySource represents the configuration of the source
-                    for the policy
-                  properties:
-                    git:
-                      description: GitRepository configures fetching of the policies
-                        from a Git repository
-                      properties:
-                        repository:
-                          description: Repository URL
-                          type: string
-                        revision:
-                          default: main
-                          description: Revision matching the branch, commit id or
-                            similar to fetch. Defaults to `main`
-                          type: string
-                      required:
-                      - repository
-                      type: object
-                  type: object
+                  type: string
                 minItems: 1
                 type: array
             required:

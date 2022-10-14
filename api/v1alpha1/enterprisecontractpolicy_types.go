@@ -28,9 +28,9 @@ type EnterpriseContractPolicySpec struct {
 	// Description of the policy or it's intended use
 	// +optional
 	Description string `json:"description,omitempty"`
-	// Sources of the policy
+	// One or more source urls for the policy rules
 	// +kubebuilder:validation:MinItems:=1
-	Sources []PolicySource `json:"sources"`
+	Sources []string `json:"sources"`
 	// Authorization for per component release approvals
 	// +optional
 	Authorization *Authorization `json:"authorization,omitempty"`
@@ -66,22 +66,6 @@ type AuthorizedComponent struct {
 	// Authorizer is the email address of the person authorizing the release
 	// +optional
 	Authorizer string `json:"authorizer,omitempty"`
-}
-
-// PolicySource represents the configuration of the source for the policy
-type PolicySource struct {
-	// GitRepository configures fetching of the policies from a Git repository
-	// +optional
-	GitRepository *GitPolicySource `json:"git,omitempty"`
-}
-
-type GitPolicySource struct {
-	// Repository URL
-	Repository string `json:"repository"`
-	// Revision matching the branch, commit id or similar to fetch. Defaults to `main`
-	// +kubebuilder:default:=main
-	// +optional
-	Revision string `json:"revision,omitempty"`
 }
 
 // EnterpriseContractPolicyExceptions configuration of exceptions for the policy evaluation
