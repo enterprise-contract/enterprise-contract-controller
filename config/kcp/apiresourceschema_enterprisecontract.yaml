@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-7c178a69bea3d98cde5f39a383ffd1a8.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-79bd9f4d558f11deb7abcae591320479.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -62,7 +62,7 @@ spec:
               description: Configuration handles policy modification configuration
                 (collections, exclusions, inclusions)
               properties:
-                collections;omitempty:
+                collections:
                   description: Collections set of predefined rules.
                   items:
                     type: string
