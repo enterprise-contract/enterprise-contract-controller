@@ -85,7 +85,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 | Field | Description
 | *`excludeRules`* __string array__ | ExcludeRules set of policy exclusions that, in case of failure, do not block the success of the outcome.
 | *`includeRules`* __string array__ | IncludeRules set of policy inclusions that are added to the policy evaluation. These override excluded rules.
-| *`collections;omitempty`* __string array__ | Collections set of predefined rules.
+| *`collections`* __string array__ | Collections set of predefined rules.
 |===
 
 
