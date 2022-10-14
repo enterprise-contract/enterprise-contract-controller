@@ -66,21 +66,26 @@ spec:
                 description: Configuration handles policy modification configuration
                   (collections, exclusions, inclusions)
                 properties:
-                  collection;omitempty:
+                  collections;omitempty:
+                    description: Collections set of predefined rules.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   excludeRules:
+                    description: ExcludeRules set of policy exclusions that, in case
+                      of failure, do not block the success of the outcome.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   includeRules:
+                    description: IncludeRules set of policy inclusions that are added
+                      to the policy evaluation. These override excluded rules.
                     items:
                       type: string
                     type: array
-                required:
-                  - collection;omitempty
+                    x-kubernetes-list-type: set
                 type: object
               description:
                 description: Description of the policy or it's intended use

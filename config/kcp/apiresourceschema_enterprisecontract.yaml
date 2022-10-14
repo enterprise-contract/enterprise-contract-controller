@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-58a9651b7fb1b1b89522dfeb886c730a.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-594253e117fd79d79e47c1bdda949590.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -57,6 +57,31 @@ spec:
                         type: string
                     type: object
                   type: array
+              type: object
+            configuration:
+              description: Configuration handles policy modification configuration
+                (collections, exclusions, inclusions)
+              properties:
+                collections;omitempty:
+                  description: Collections set of predefined rules.
+                  items:
+                    type: string
+                  type: array
+                  x-kubernetes-list-type: set
+                excludeRules:
+                  description: ExcludeRules set of policy exclusions that, in case
+                    of failure, do not block the success of the outcome.
+                  items:
+                    type: string
+                  type: array
+                  x-kubernetes-list-type: set
+                includeRules:
+                  description: IncludeRules set of policy inclusions that are added
+                    to the policy evaluation. These override excluded rules.
+                  items:
+                    type: string
+                  type: array
+                  x-kubernetes-list-type: set
               type: object
             description:
               description: Description of the policy or it's intended use
