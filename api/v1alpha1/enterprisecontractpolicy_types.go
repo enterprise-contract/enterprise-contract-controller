@@ -37,6 +37,9 @@ type EnterpriseContractPolicySpec struct {
 	// Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
 	// +optional
 	Exceptions *EnterpriseContractPolicyExceptions `json:"exceptions,omitempty"`
+	// Configuration handles policy modification configuration (collections, exclusions, inclusions)
+	// +optional
+	Configuration *EnterpriseContractPolicyConfiguration `json:"configuration,omitempty"`
 	// URL of the Rekor instance. Empty string disables Rekor integration
 	// +optional
 	RekorUrl string `json:"rekorUrl,omitempty"`
@@ -105,7 +108,7 @@ type EnterpriseContractPolicyConfiguration struct {
 	// Collections set of predefined rules.
 	// +optional
 	// +listType:=set
-	Collections []string `json:"collection;omitempty"`
+	Collections []string `json:"collections;omitempty"`
 }
 
 // EnterpriseContractPolicyStatus defines the observed state of EnterpriseContractPolicy
