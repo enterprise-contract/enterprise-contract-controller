@@ -3,8 +3,8 @@
   "sources": [
     "git::https://github.com/acme/ec-policy.git//policy?ref=prod"
   ],
-  "exceptions": {
-    "nonBlocking": [
+  "configuration": {
+    "excludeRules": [
       "friday_policy",
       "room_temperature"
     ]
