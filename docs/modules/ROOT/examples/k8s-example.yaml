@@ -6,8 +6,8 @@ metadata:
   namespace: acme
 spec:
   description: ACME & co policy
-  exceptions:
-    nonBlocking:
+  configuration:
+    excludeRules:
     - friday_policy
     - room_temperature
   sources:
