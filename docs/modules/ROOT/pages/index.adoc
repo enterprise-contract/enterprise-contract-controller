@@ -2,7 +2,7 @@
 
 The HACBS Enterprise Contract Policy defines the configuration for the
 enforcement of the Enterprise Contract policy by specifying rules and
-authorizations needed for a container image built in HACKBS to be compliant with
+authorizations needed for a container image built in HACBS to be compliant with
 organization's software release policy requirements.
 
 The Enterprise Contract Policy is passed in the form of a configuration to the
