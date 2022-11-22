@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-79bd9f4d558f11deb7abcae591320479.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-266b54f62c3af136c7a58be38c65e37d.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -68,16 +68,16 @@ spec:
                     type: string
                   type: array
                   x-kubernetes-list-type: set
-                excludeRules:
-                  description: ExcludeRules set of policy exclusions that, in case
-                    of failure, do not block the success of the outcome.
+                exclude:
+                  description: Exclude set of policy exclusions that, in case of failure,
+                    do not block the success of the outcome.
                   items:
                     type: string
                   type: array
                   x-kubernetes-list-type: set
-                includeRules:
-                  description: IncludeRules set of policy inclusions that are added
-                    to the policy evaluation. These override excluded rules.
+                include:
+                  description: Include set of policy inclusions that are added to
+                    the policy evaluation. These override excluded rules.
                   items:
                     type: string
                   type: array
@@ -87,8 +87,9 @@ spec:
               description: Description of the policy or it's intended use
               type: string
             exceptions:
-              description: Exceptions under which the policy is evaluated as successful
-                even if the listed policy checks have reported failure
+              description: 'Exceptions under which the policy is evaluated as successful
+                even if the listed policy checks have reported failure Deprecated:
+                This has been replaced by the configuration.'
               properties:
                 nonBlocking:
                   description: NonBlocking set of policy exceptions that in case of
