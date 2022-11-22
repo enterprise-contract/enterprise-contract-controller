@@ -18,8 +18,8 @@ func simplePolicy() *ecc.EnterpriseContractPolicySpec {
 		Sources: []string{
 			"git::https://github.com/acme/ec-policy.git//policy?ref=prod",
 		},
-		Exceptions: &ecc.EnterpriseContractPolicyExceptions{
-			NonBlocking: []string{
+		Configuration: &ecc.EnterpriseContractPolicyConfiguration{
+			Exclude: []string{
 				"friday_policy",
 				"room_temperature",
 			},

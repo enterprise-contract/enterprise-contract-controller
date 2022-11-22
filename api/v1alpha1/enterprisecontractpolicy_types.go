@@ -34,7 +34,9 @@ type EnterpriseContractPolicySpec struct {
 	// Authorization for per component release approvals
 	// +optional
 	Authorization *Authorization `json:"authorization,omitempty"`
-	// Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure
+	// Exceptions under which the policy is evaluated as successful even if the
+	// listed policy checks have reported failure
+	// Deprecated: This has been replaced by the configuration.
 	// +optional
 	Exceptions *EnterpriseContractPolicyExceptions `json:"exceptions,omitempty"`
 	// Configuration handles policy modification configuration (collections, exclusions, inclusions)
@@ -79,16 +81,16 @@ type EnterpriseContractPolicyExceptions struct {
 
 // EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
 type EnterpriseContractPolicyConfiguration struct {
-	// ExcludeRules set of policy exclusions that, in case of failure, do not block
+	// Exclude set of policy exclusions that, in case of failure, do not block
 	// the success of the outcome.
 	// +optional
 	// +listType:=set
-	ExcludeRules []string `json:"excludeRules,omitempty"`
-	// IncludeRules set of policy inclusions that are added to the policy evaluation.
+	Exclude []string `json:"exclude,omitempty"`
+	// Include set of policy inclusions that are added to the policy evaluation.
 	// These override excluded rules.
 	// +optional
 	// +listType:=set
-	IncludeRules []string `json:"includeRules,omitempty"`
+	Include []string `json:"include,omitempty"`
 	// Collections set of predefined rules.
 	// +optional
 	// +listType:=set
