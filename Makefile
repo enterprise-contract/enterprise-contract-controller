@@ -48,6 +48,7 @@ docs: $(wildcard api/v1alpha1/*.go) ## Generate documentation
 .PHONY: manifests
 manifests: controller-gen kcp-manifests ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
 	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths="./..." output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths="./..." output:crd:artifacts:config=api/config
 
 .PHONY: generate
 generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
