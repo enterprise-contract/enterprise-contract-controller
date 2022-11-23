@@ -42,7 +42,7 @@ help: ## Display this help.
 
 .PHONY: docs
 docs: $(wildcard api/v1alpha1/*.go) ## Generate documentation
-	@go run github.com/elastic/crd-ref-docs --config=docs/config.yaml --source-path=./api/v1alpha1 --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
+	@go run -modfile tools/go.mod github.com/elastic/crd-ref-docs --config=docs/config.yaml --source-path=./api/v1alpha1 --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
 	@go run ./docs
 
 .PHONY: manifests
@@ -57,7 +57,7 @@ kcp-manifests: kcp-apischema kcp-apiexport ## Generate kcp manifests
 
 kcp-apischema: $(wildcard config/crd/bases/*.yaml)
 	@rm -f config/kcp/apiresourceschema_enterprisecontract.yaml
-	@for f in $?; do go run github.com/kcp-dev/kcp/cmd/kubectl-kcp crd snapshot -f $$f --prefix md5-$$(md5sum $$f | awk '{print $1}') >> config/kcp/apiresourceschema_enterprisecontract.yaml; done
+	@for f in $?; do go run -modfile tools/go.mod github.com/kcp-dev/kcp/cmd/kubectl-kcp crd snapshot -f $$f --prefix md5-$$(md5sum $$f | awk '{print $1}') >> config/kcp/apiresourceschema_enterprisecontract.yaml; done
 
 kcp-apiexport: config/kcp/apiresourceschema_enterprisecontract.yaml
 	@yq ea 'select(.metadata.name != null) | {"apiVersion": "apis.kcp.dev/v1alpha1", "kind": "APIExport", "metadata": {"name": "enterprisecontract"}, "spec": {"latestResourceSchemas": [.metadata.name]}} as $$obj ireduce({}; . *+ $$obj)' config/kcp/apiresourceschema_enterprisecontract.yaml > config/kcp/apiexport_enterprisecontract.yaml
