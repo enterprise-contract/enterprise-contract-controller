@@ -21,9 +21,7 @@ jobs:
         with:
           cache: true
           go-version-file: go.mod
-
-      - name: Make all
-        run: make
+          cache-dependency-path: '**/go.sum'
 
       - name: Test
         run: make test
