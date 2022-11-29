@@ -437,8 +437,8 @@ github.com/jung-kurt/gofpdf v1.0.3-0.20190309125859-24315acbbda5/go.mod h1:7Id9E
 github.com/karrick/godirwalk v1.16.1/go.mod h1:j4mkqPuvaLI8mp1DroR3P6ad7cyYd4c1qeJ3RV7ULlk=
 github.com/kcp-dev/apimachinery v0.0.0-20220912132244-efe716c18e43 h1:vPv81j3mT5VYQ6YnCXrnKJQPeRNHwPcGJNsQNQfIG9Q=
 github.com/kcp-dev/apimachinery v0.0.0-20220912132244-efe716c18e43/go.mod h1:qnvUHkdxOrNzX17yX+z8r81CZEBuFdveNzWqFlwZ55w=
-github.com/kcp-dev/kcp v0.9.0 h1:lBX63sEqDGMCrLM+MAQBlMERrUW8pnMcltk52XStSkk=
-github.com/kcp-dev/kcp v0.9.0/go.mod h1:AJOr9fzaWBjlrB13e0ibSHEg8rwmtxzgy5hmjicbSYQ=
+github.com/kcp-dev/kcp v0.9.1 h1:XA6OpCWRrYMqtTzRFFFGDhGFYWTRy/DLptYlcLePuBc=
+github.com/kcp-dev/kcp v0.9.1/go.mod h1:AJOr9fzaWBjlrB13e0ibSHEg8rwmtxzgy5hmjicbSYQ=
 github.com/kcp-dev/kcp/pkg/apis v0.9.0 h1:7z+/d2AF/Dua6gbiUOHAZkPtW7QDzHCqLJgSkvPE68Y=
 github.com/kcp-dev/kcp/pkg/apis v0.9.0/go.mod h1:bHOeSFzFYaOOwtdNLNqoZndz53tzEGZdXT/dWnPmjLU=
 github.com/kcp-dev/kubernetes v0.0.0-20220915135949-eeba459ad2a1 h1:WiTSC+XJ6L6oNLKtQKO/DdzDF4sizXdVDQKmereQoN0=
