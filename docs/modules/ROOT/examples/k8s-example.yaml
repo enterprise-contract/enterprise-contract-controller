@@ -11,5 +11,9 @@ spec:
     - room_temperature
   description: ACME & co policy
   sources:
-  - git::https://github.com/acme/ec-policy.git//policy?ref=prod
+  - data:
+    - git::https://github.com/acme/ec-policy.git//data?ref=prod
+    name: simple
+    policy:
+    - git::https://github.com/acme/ec-policy.git//policy?ref=prod
 status: {}
