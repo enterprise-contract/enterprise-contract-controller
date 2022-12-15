@@ -28,9 +28,9 @@ type EnterpriseContractPolicySpec struct {
 	// Description of the policy or it's intended use
 	// +optional
 	Description string `json:"description,omitempty"`
-	// One or more source urls for the policy rules
+	// One or more groups of policy rules
 	// +kubebuilder:validation:MinItems:=1
-	Sources []string `json:"sources"`
+	Sources []Source `json:"sources,omitempty"`
 	// Authorization for per component release approvals
 	// +optional
 	Authorization *Authorization `json:"authorization,omitempty"`
@@ -48,6 +48,19 @@ type EnterpriseContractPolicySpec struct {
 	// Public key used to validate the signature of images and attestations
 	// +optional
 	PublicKey string `json:"publicKey,omitempty"`
+}
+
+// Source defines policies and data that are evaluated together
+type Source struct {
+	// Optional name for the source
+	// +optional
+	Name string `json:"name,omitempty"`
+	// List of go-getter style policy source urls
+	// +kubebuilder:validation:MinItems:=1
+	Policy []string `json:"policy,omitempty"`
+	// List of go-getter style policy data source urls
+	// +optional
+	Data []string `json:"data,omitempty"`
 }
 
 // Authorization defines a release approval

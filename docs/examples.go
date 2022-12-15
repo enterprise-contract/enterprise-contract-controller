@@ -15,9 +15,15 @@ import (
 func simplePolicy() *ecc.EnterpriseContractPolicySpec {
 	return &ecc.EnterpriseContractPolicySpec{
 		Description: "ACME & co policy",
-		Sources: []string{
-			"git::https://github.com/acme/ec-policy.git//policy?ref=prod",
-		},
+		Sources: []ecc.Source{{
+			Name: "simple",
+			Policy: []string{
+				"git::https://github.com/acme/ec-policy.git//policy?ref=prod",
+			},
+			Data: []string{
+				"git::https://github.com/acme/ec-policy.git//data?ref=prod",
+			},
+		}},
 		Configuration: &ecc.EnterpriseContractPolicyConfiguration{
 			Exclude: []string{
 				"friday_policy",
