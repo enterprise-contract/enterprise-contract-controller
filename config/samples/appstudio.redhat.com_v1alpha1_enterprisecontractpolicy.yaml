@@ -5,7 +5,7 @@ metadata:
 spec:
   description: My custom enterprise contract policy configuration
   sources:
-    - git::https://github.com/hacbs-contract/ec-policies//policy/release?ref=main
+    - quay.io/hacbs-contract/ec-release-policy:latest
   exceptions: # Deprecated. Use configuration as seen below
     nonBlocking: # Deprecated. Use excludeRules as seen below
       - not_useful
