@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-266b54f62c3af136c7a58be38c65e37d.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-00cf2b46a7597dd127bfdaf2bec25c1c.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -108,13 +108,27 @@ spec:
                 integration
               type: string
             sources:
-              description: One or more source urls for the policy rules
+              description: One or more groups of policy rules
               items:
-                type: string
+                description: Source defines policies and data that are evaluated together
+                properties:
+                  data:
+                    description: List of go-getter style policy data source urls
+                    items:
+                      type: string
+                    type: array
+                  name:
+                    description: Optional name for the source
+                    type: string
+                  policy:
+                    description: List of go-getter style policy source urls
+                    items:
+                      type: string
+                    minItems: 1
+                    type: array
+                type: object
               minItems: 1
               type: array
-          required:
-          - sources
           type: object
         status:
           description: EnterpriseContractPolicyStatus defines the observed state of
