@@ -50,14 +50,15 @@ docs: $(wildcard $(CRD_DEF)/*.go) ## Generate documentation
 	@go run -modfile tools/go.mod github.com/elastic/crd-ref-docs --config=docs/config.yaml --source-path=$(CRD_DEF) --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
 	@go run ./docs
 
-config/crd/bases/%.yaml:
+.PHONY: gen-crd-webhook
+gen-crd-webhook:
 	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths=./... output:crd:artifacts:config=config/crd/bases
 
 api/config/%.yaml: config/crd/bases/%.yaml
 	@mkdir -p api/config
 	@cp $< $@
 
-manifests: api/config/appstudio.redhat.com_enterprisecontractpolicies.yaml kcp-manifests ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
+manifests: gen-crd-webhook api/config/appstudio.redhat.com_enterprisecontractpolicies.yaml kcp-manifests ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
 
 .PHONY: generate
 generate: ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
