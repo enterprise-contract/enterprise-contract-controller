@@ -50,7 +50,12 @@ docs: $(wildcard $(CRD_DEF)/*.go) ## Generate documentation
 	@go run -modfile tools/go.mod github.com/elastic/crd-ref-docs --config=docs/config.yaml --source-path=$(CRD_DEF) --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
 	@go run ./docs
 
-config/crd/bases/%.yaml:
+GEN_DEPS=\
+ controllers/enterprisecontractpolicy_controller.go \
+ api/v1alpha1/enterprisecontractpolicy_types.go \
+ api/v1alpha1/groupversion_info.go
+
+config/crd/bases/%.yaml: $(GEN_DEPS)
 	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths=./... output:crd:artifacts:config=config/crd/bases
 
 api/config/%.yaml: config/crd/bases/%.yaml
@@ -60,7 +65,7 @@ api/config/%.yaml: config/crd/bases/%.yaml
 manifests: api/config/appstudio.redhat.com_enterprisecontractpolicies.yaml kcp-manifests ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
 
 .PHONY: generate
-generate: ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
+generate: $(GEN_DEPS) ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths=./...
 
 kcp-manifests: kcp-apischema kcp-apiexport ## Generate kcp manifests
