@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-2229ff0f580efbc3f49fd19904e29463.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-71ff890877eb7d1c2d31d88bcb295111.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -84,7 +84,7 @@ spec:
                   x-kubernetes-list-type: set
               type: object
             description:
-              description: Description of the policy or it's intended use
+              description: Description of the policy or its intended use
               type: string
             exceptions:
               description: 'Exceptions under which the policy is evaluated as successful
