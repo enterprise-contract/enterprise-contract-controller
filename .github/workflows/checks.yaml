@@ -24,9 +24,7 @@ jobs:
           cache-dependency-path: '**/go.sum'
 
       - name: Test
-        run: |
-          touch api/v1alpha1/* # forces manifest regeneration, some changes (e.g. controller-gen update) don't reflect in code
-          make test
+        run: make test
 
       - name: Check for uncommitted changes
         run: |
