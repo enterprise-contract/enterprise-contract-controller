@@ -53,7 +53,8 @@ docs: $(wildcard $(CRD_DEF)/*.go) ## Generate documentation
 GEN_DEPS=\
  controllers/enterprisecontractpolicy_controller.go \
  api/v1alpha1/enterprisecontractpolicy_types.go \
- api/v1alpha1/groupversion_info.go
+ api/v1alpha1/groupversion_info.go \
+ tools/go.sum
 
 config/crd/bases/%.yaml: $(GEN_DEPS)
 	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths=./... output:crd:artifacts:config=config/crd/bases
