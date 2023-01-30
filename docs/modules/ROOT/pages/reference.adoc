@@ -134,7 +134,7 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 [cols="25a,75a", options="header"]
 |===
 | Field | Description
-| *`description`* __string__ | Description of the policy or it's intended use
+| *`description`* __string__ | Description of the policy or its intended use
 | *`sources`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$] array__ | One or more groups of policy rules
 | *`authorization`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]__ | Authorization for per component release approvals
 | *`exceptions`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions[$$EnterpriseContractPolicyExceptions$$]__ | Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure Deprecated: This has been replaced by the configuration.
