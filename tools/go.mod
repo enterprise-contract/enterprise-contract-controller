@@ -6,7 +6,7 @@ require (
 	github.com/elastic/crd-ref-docs v0.0.8
 	github.com/kcp-dev/kcp v0.9.1
 	sigs.k8s.io/controller-runtime/tools/setup-envtest v0.0.0-20221124082817-e57ce7861d5a
-	sigs.k8s.io/controller-tools v0.11.1
+	sigs.k8s.io/controller-tools v0.11.2
 	sigs.k8s.io/kustomize/kustomize/v4 v4.5.7
 )
 
@@ -145,9 +145,9 @@ require (
 	gopkg.in/square/go-jose.v2 v2.2.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.26.0 // indirect
-	k8s.io/apiextensions-apiserver v0.26.0 // indirect
-	k8s.io/apimachinery v0.26.0 // indirect
+	k8s.io/api v0.26.1 // indirect
+	k8s.io/apiextensions-apiserver v0.26.1 // indirect
+	k8s.io/apimachinery v0.26.1 // indirect
 	k8s.io/apiserver v0.24.3 // indirect
 	k8s.io/cli-runtime v0.24.3 // indirect
 	k8s.io/client-go v0.24.3 // indirect
