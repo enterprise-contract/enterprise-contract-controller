@@ -2,7 +2,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: md5-71ff890877eb7d1c2d31d88bcb295111.enterprisecontractpolicies.appstudio.redhat.com
+  name: md5-3ce2054d9583eb97d3939c2ea723b862.enterprisecontractpolicies.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
