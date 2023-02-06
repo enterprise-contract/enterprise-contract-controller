@@ -58,6 +58,7 @@ GEN_DEPS=\
 
 config/crd/bases/%.yaml: $(GEN_DEPS)
 	$(CONTROLLER_GEN) rbac:roleName=enterprise-contract-role crd webhook paths=./... output:crd:artifacts:config=config/crd/bases
+	yq -i 'del(.metadata.annotations["controller-gen.kubebuilder.io/version"])' $@
 
 api/config/%.yaml: config/crd/bases/%.yaml
 	@mkdir -p api/config
