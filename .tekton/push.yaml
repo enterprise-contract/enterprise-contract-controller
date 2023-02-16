@@ -14,13 +14,6 @@ spec:
       value: "{{revision}}"
     - name: output-image
       value: 'quay.io/redhat-appstudio/enterprise-contract-controller:{{revision}}'
-    - name: infra-deployment-update-script
-      value: >
-        sed -i
-        -e 's|\(https://github.com/hacbs-contract/enterprise-contract-controller/.*?ref=\)\(.*\)|\1{{ revision }}|'
-        -e 's|\(https://raw.githubusercontent.com/hacbs-contract/enterprise-contract-controller/\)\([[:alnum:]]*\)\(.*\)|\1{{ revision }}\3|'
-        -e 's/\(newTag: \).*/\1{{ revision }}/'
-        components/enterprise-contract/kustomization.yaml
   pipelineRef:
     name: docker-build
     bundle: quay.io/redhat-appstudio/hacbs-core-service-templates-bundle:latest
