@@ -64,20 +64,11 @@ api/config/%.yaml: config/crd/bases/%.yaml
 	@mkdir -p api/config
 	@cp $< $@
 
-manifests: api/config/appstudio.redhat.com_enterprisecontractpolicies.yaml kcp-manifests ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
+manifests: api/config/appstudio.redhat.com_enterprisecontractpolicies.yaml ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
 
 .PHONY: generate
 generate: $(GEN_DEPS) ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths=./...
-
-kcp-manifests: kcp-apischema kcp-apiexport ## Generate kcp manifests
-
-kcp-apischema: $(wildcard config/crd/bases/*.yaml)
-	@rm -f config/kcp/apiresourceschema_enterprisecontract.yaml
-	@for f in $?; do go run -modfile tools/go.mod github.com/kcp-dev/kcp/cmd/kubectl-kcp crd snapshot -f $$f --prefix md5-$$(md5sum $$f | awk '{print $1}') >> config/kcp/apiresourceschema_enterprisecontract.yaml; done
-
-kcp-apiexport: config/kcp/apiresourceschema_enterprisecontract.yaml
-	@yq ea 'select(.metadata.name != null) | {"apiVersion": "apis.kcp.dev/v1alpha1", "kind": "APIExport", "metadata": {"name": "enterprisecontract"}, "spec": {"latestResourceSchemas": [.metadata.name]}} as $$obj ireduce({}; . *+ $$obj)' config/kcp/apiresourceschema_enterprisecontract.yaml > config/kcp/apiexport_enterprisecontract.yaml
 
 .PHONY: fmt
 fmt: ## Run go fmt against code.

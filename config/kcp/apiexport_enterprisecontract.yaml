@@ -1,7 +1,0 @@
-apiVersion: apis.kcp.dev/v1alpha1
-kind: APIExport
-metadata:
-  name: enterprisecontract
-spec:
-  latestResourceSchemas:
-    - md5-8912b08cc0518ab2d674a0ecf1a89ce6.enterprisecontractpolicies.appstudio.redhat.com
