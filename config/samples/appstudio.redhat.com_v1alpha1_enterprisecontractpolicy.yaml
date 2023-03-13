@@ -5,16 +5,17 @@ metadata:
 spec:
   description: My custom enterprise contract policy configuration
   sources:
-    - quay.io/hacbs-contract/ec-release-policy:latest
+    - policy:
+        - quay.io/hacbs-contract/ec-release-policy:latest
   exceptions: # Deprecated. Use configuration as seen below
     nonBlocking: # Deprecated. Use excludeRules as seen below
       - not_useful
       - test:conftest-clair
   configuration:
-    excludeRules:
+    exclude:
       - not_useful
       - test:conftest-clair
-    includeRules:
+    include:
       - always_checked
     collections:
       - salsa_one_collection
