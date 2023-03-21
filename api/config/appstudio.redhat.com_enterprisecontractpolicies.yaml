@@ -77,16 +77,6 @@ spec:
                 description:
                   description: Description of the policy or its intended use
                   type: string
-                exceptions:
-                  description: 'Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure Deprecated: This has been replaced by the configuration.'
-                  properties:
-                    nonBlocking:
-                      description: NonBlocking set of policy exceptions that in case of failure do not block the success of the outcome
-                      items:
-                        type: string
-                      type: array
-                      x-kubernetes-list-type: set
-                  type: object
                 publicKey:
                   description: Public key used to validate the signature of images and attestations
                   type: string

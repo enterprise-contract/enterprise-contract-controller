@@ -89,21 +89,6 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 |===
 
 
-[id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions"]
-==== EnterpriseContractPolicyExceptions
-
-EnterpriseContractPolicyExceptions configuration of exceptions for the policy evaluation
-
-[quote]
-Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
-
-[cols="25a,75a", options="header"]
-|===
-| Field | Description
-| *`nonBlocking`* __string array__ | NonBlocking set of policy exceptions that in case of failure do not block the success of the outcome
-|===
-
-
 [id="{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicylist"]
 ==== EnterpriseContractPolicyList
 
@@ -137,7 +122,6 @@ Appears In: xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-c
 | *`description`* __string__ | Description of the policy or its intended use
 | *`sources`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$] array__ | One or more groups of policy rules
 | *`authorization`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]__ | Authorization for per component release approvals
-| *`exceptions`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyexceptions[$$EnterpriseContractPolicyExceptions$$]__ | Exceptions under which the policy is evaluated as successful even if the listed policy checks have reported failure Deprecated: This has been replaced by the configuration.
 | *`configuration`* __xref:{anchor_prefix}-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (collections, exclusions, inclusions)
 | *`rekorUrl`* __string__ | URL of the Rekor instance. Empty string disables Rekor integration
 | *`publicKey`* __string__ | Public key used to validate the signature of images and attestations

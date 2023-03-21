@@ -7,10 +7,6 @@ spec:
   sources:
     - policy:
         - quay.io/hacbs-contract/ec-release-policy:latest
-  exceptions: # Deprecated. Use configuration as seen below
-    nonBlocking: # Deprecated. Use excludeRules as seen below
-      - not_useful
-      - test:conftest-clair
   configuration:
     exclude:
       - not_useful
