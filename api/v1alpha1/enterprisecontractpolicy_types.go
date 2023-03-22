@@ -34,11 +34,6 @@ type EnterpriseContractPolicySpec struct {
 	// Authorization for per component release approvals
 	// +optional
 	Authorization *Authorization `json:"authorization,omitempty"`
-	// Exceptions under which the policy is evaluated as successful even if the
-	// listed policy checks have reported failure
-	// Deprecated: This has been replaced by the configuration.
-	// +optional
-	Exceptions *EnterpriseContractPolicyExceptions `json:"exceptions,omitempty"`
 	// Configuration handles policy modification configuration (collections, exclusions, inclusions)
 	// +optional
 	Configuration *EnterpriseContractPolicyConfiguration `json:"configuration,omitempty"`
@@ -81,15 +76,6 @@ type AuthorizedComponent struct {
 	// Authorizer is the email address of the person authorizing the release
 	// +optional
 	Authorizer string `json:"authorizer,omitempty"`
-}
-
-// EnterpriseContractPolicyExceptions configuration of exceptions for the policy evaluation
-type EnterpriseContractPolicyExceptions struct {
-	// NonBlocking set of policy exceptions that in case of failure do not block
-	// the success of the outcome
-	// +optional
-	// +listType:=set
-	NonBlocking []string `json:"nonBlocking,omitempty"`
 }
 
 // EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
