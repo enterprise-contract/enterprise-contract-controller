@@ -1,4 +1,4 @@
-module github.com/hacbs-contract/enterprise-contract-controller/api
+module github.com/enterprise-contract/enterprise-contract-controller/api
 
 go 1.18
 

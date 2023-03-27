@@ -1,9 +1,9 @@
 = About Enterprise Contract Policy
 
-The HACBS Enterprise Contract Policy defines the configuration for the
-enforcement of the Enterprise Contract policy by specifying rules and
-authorizations needed for a container image built in HACBS to be compliant with
-organization's software release policy requirements.
+The Enterprise Contract Policy defines the configuration for the enforcement of
+the Enterprise Contract by specifying rules and authorizations needed for a
+container image built in Red Hat Trusted Application Pipeline to be compliant
+with organization's software release policy requirements.
 
 The Enterprise Contract Policy is passed in the form of a configuration to the
 xref:ec-cli:ROOT:index.adoc[EC CLI] to
@@ -26,7 +26,7 @@ include::example$spec-example.json[]
 ----
 
 Consult the
-xref:reference.adoc#k8s-api-github-com-hacbs-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[the
+xref:reference.adoc#k8s-api-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[the
 EnterpriseContractPolicySpec reference] documentation for details on the
 structure of this document.
 

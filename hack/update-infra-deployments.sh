@@ -31,8 +31,8 @@ cd "${TARGET_DIR}" || exit 1
 
 echo "Updating infra-deployments to revision ${REVISION}..."
 sed -i \
-  -e 's|\(https://github.com/hacbs-contract/enterprise-contract-controller/.*?ref=\)\(.*\)|\1'${REVISION}'|' \
-  -e 's|\(https://raw.githubusercontent.com/hacbs-contract/enterprise-contract-controller/\)\([[:alnum:]]*\)\(.*\)|\1'${REVISION}'\3|' \
+  -e 's|\(https://github.com/enterprise-contract/enterprise-contract-controller/.*?ref=\)\(.*\)|\1'${REVISION}'|' \
+  -e 's|\(https://raw.githubusercontent.com/enterprise-contract/enterprise-contract-controller/\)\([[:alnum:]]*\)\(.*\)|\1'${REVISION}'\3|' \
   -e 's/\(newTag: \).*/\1'${REVISION}'/' \
   components/enterprise-contract/kustomization.yaml
 echo 'infra-deployments updated successfully'

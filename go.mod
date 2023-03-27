@@ -1,9 +1,9 @@
-module github.com/hacbs-contract/enterprise-contract-controller
+module github.com/enterprise-contract/enterprise-contract-controller
 
 go 1.18
 
 require (
-	github.com/hacbs-contract/enterprise-contract-controller/api v0.0.0-00010101000000-000000000000
+	github.com/enterprise-contract/enterprise-contract-controller/api v0.0.0-00010101000000-000000000000
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.27.5
 	k8s.io/apimachinery v0.26.3
@@ -73,4 +73,4 @@ require (
 )
 
 // point to the local version
-replace github.com/hacbs-contract/enterprise-contract-controller/api => ./api
+replace github.com/enterprise-contract/enterprise-contract-controller/api => ./api

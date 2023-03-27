@@ -31,8 +31,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	appstudioredhatcomv1alpha1 "github.com/hacbs-contract/enterprise-contract-controller/api/v1alpha1"
-	"github.com/hacbs-contract/enterprise-contract-controller/controllers"
+	appstudioredhatcomv1alpha1 "github.com/enterprise-contract/enterprise-contract-controller/api/v1alpha1"
+	"github.com/enterprise-contract/enterprise-contract-controller/controllers"
 	//+kubebuilder:scaffold:imports
 )
 
