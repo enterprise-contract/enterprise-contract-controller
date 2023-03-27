@@ -1,5 +1,5 @@
-# HACBS Enterprise Contract controller
-A Kubernetes controller for HACBS Enterprise Contract resources.
+# Enterprise Contract controller
+A Kubernetes controller for Enterprise Contract resources.
 
 ## Description
 Currently contains `EnterpriseContractConfiguration` Kubernetes custom resource. See an [example](config/samples/appstudio.redhat.com_v1alpha1_enterprisecontractpolicy.yaml).

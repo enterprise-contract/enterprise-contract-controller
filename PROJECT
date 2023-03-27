@@ -2,7 +2,7 @@ domain: redhat.com
 layout:
 - go.kubebuilder.io/v3
 projectName: enterprise-contract-controller
-repo: github.com/hacbs-contract/enterprise-contract-controller
+repo: github.com/enterprise-contract/enterprise-contract-controller
 resources:
 - api:
     crdVersion: v1
@@ -11,6 +11,6 @@ resources:
   domain: redhat.com
   group: appstudio
   kind: EnterpriseContractPolicy
-  path: github.com/hacbs-contract/enterprise-contract-controller/api/v1alpha1
+  path: github.com/enterprise-contract/enterprise-contract-controller/api/v1alpha1
   version: v1alpha1
 version: "3"

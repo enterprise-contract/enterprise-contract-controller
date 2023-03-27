@@ -7,7 +7,7 @@ import (
 	"os"
 	"path"
 
-	ecc "github.com/hacbs-contract/enterprise-contract-controller/api/v1alpha1"
+	ecc "github.com/enterprise-contract/enterprise-contract-controller/api/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )

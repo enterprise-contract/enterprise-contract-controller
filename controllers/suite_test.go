@@ -29,7 +29,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	appstudioredhatcomv1alpha1 "github.com/hacbs-contract/enterprise-contract-controller/api/v1alpha1"
+	appstudioredhatcomv1alpha1 "github.com/enterprise-contract/enterprise-contract-controller/api/v1alpha1"
 	//+kubebuilder:scaffold:imports
 )
 
