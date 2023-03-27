@@ -34,7 +34,7 @@ type EnterpriseContractPolicySpec struct {
 	// Authorization for per component release approvals
 	// +optional
 	Authorization *Authorization `json:"authorization,omitempty"`
-	// Configuration handles policy modification configuration (collections, exclusions, inclusions)
+	// Configuration handles policy modification configuration (exclusions and inclusions)
 	// +optional
 	Configuration *EnterpriseContractPolicyConfiguration `json:"configuration,omitempty"`
 	// URL of the Rekor instance. Empty string disables Rekor integration
@@ -90,7 +90,8 @@ type EnterpriseContractPolicyConfiguration struct {
 	// +optional
 	// +listType:=set
 	Include []string `json:"include,omitempty"`
-	// Collections set of predefined rules.
+	// Collections set of predefined rules.  DEPRECATED: Collections can be listed in include
+	// with the "@" prefix.
 	// +optional
 	// +listType:=set
 	Collections []string `json:"collections,omitempty"`
