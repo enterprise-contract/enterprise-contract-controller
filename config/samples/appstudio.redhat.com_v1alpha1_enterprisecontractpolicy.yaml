@@ -13,5 +13,4 @@ spec:
       - test:conftest-clair
     include:
       - always_checked
-    collections:
-      - salsa_one_collection
+      - "@salsa_one_collection"

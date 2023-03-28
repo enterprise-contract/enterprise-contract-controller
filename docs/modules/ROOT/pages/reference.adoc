@@ -85,7 +85,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | Field | Description
 | *`exclude`* __string array__ | Exclude set of policy exclusions that, in case of failure, do not block the success of the outcome.
 | *`include`* __string array__ | Include set of policy inclusions that are added to the policy evaluation. These override excluded rules.
-| *`collections`* __string array__ | Collections set of predefined rules.
+| *`collections`* __string array__ | Collections set of predefined rules.  DEPRECATED: Collections can be listed in include with the "@" prefix.
 |===
 
 
@@ -122,7 +122,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`description`* __string__ | Description of the policy or its intended use
 | *`sources`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$] array__ | One or more groups of policy rules
 | *`authorization`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]__ | Authorization for per component release approvals
-| *`configuration`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (collections, exclusions, inclusions)
+| *`configuration`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (exclusions and inclusions)
 | *`rekorUrl`* __string__ | URL of the Rekor instance. Empty string disables Rekor integration
 | *`publicKey`* __string__ | Public key used to validate the signature of images and attestations
 |===

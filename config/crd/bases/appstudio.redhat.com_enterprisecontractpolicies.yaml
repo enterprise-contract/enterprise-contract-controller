@@ -53,10 +53,10 @@ spec:
                       type: array
                   type: object
                 configuration:
-                  description: Configuration handles policy modification configuration (collections, exclusions, inclusions)
+                  description: Configuration handles policy modification configuration (exclusions and inclusions)
                   properties:
                     collections:
-                      description: Collections set of predefined rules.
+                      description: 'Collections set of predefined rules.  DEPRECATED: Collections can be listed in include with the "@" prefix.'
                       items:
                         type: string
                       type: array
