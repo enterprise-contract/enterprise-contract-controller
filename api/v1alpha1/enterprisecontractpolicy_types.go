@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	extv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -43,6 +44,9 @@ type EnterpriseContractPolicySpec struct {
 	// Public key used to validate the signature of images and attestations
 	// +optional
 	PublicKey string `json:"publicKey,omitempty"`
+	// A json or yaml string containing rule data that will be visible to policy rules
+	// +optional
+	RuleData *extv1.JSON `json:"ruleData,omitempty"`
 }
 
 // Source defines policies and data that are evaluated together

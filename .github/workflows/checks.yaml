@@ -26,6 +26,18 @@ jobs:
       - name: Test
         run: make test
 
+      - name: Upload unit test coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./cover.out
+          flags: controller
+
+      - name: Upload api test coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./api_cover.out
+          flags: api
+
       - name: Check for uncommitted changes
         run: |
           if ! git diff --exit-code -s; then
