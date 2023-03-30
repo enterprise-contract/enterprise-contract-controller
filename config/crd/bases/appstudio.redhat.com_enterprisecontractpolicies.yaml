@@ -84,7 +84,7 @@ spec:
                   description: URL of the Rekor instance. Empty string disables Rekor integration
                   type: string
                 ruleData:
-                  description: A json or yaml string containing rule data that will be visible to policy rules
+                  description: Arbitrary rule data that will be visible to policy rules
                   x-kubernetes-preserve-unknown-fields: true
                 sources:
                   description: One or more groups of policy rules

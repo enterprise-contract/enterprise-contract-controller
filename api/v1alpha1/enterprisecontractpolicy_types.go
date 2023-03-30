@@ -44,7 +44,7 @@ type EnterpriseContractPolicySpec struct {
 	// Public key used to validate the signature of images and attestations
 	// +optional
 	PublicKey string `json:"publicKey,omitempty"`
-	// A json or yaml string containing rule data that will be visible to policy rules
+	// Arbitrary rule data that will be visible to policy rules
 	// +optional
 	RuleData *extv1.JSON `json:"ruleData,omitempty"`
 }
