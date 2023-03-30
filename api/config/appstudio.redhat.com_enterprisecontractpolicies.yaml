@@ -85,6 +85,7 @@ spec:
                   type: string
                 ruleData:
                   description: Arbitrary rule data that will be visible to policy rules
+                  type: object
                   x-kubernetes-preserve-unknown-fields: true
                 sources:
                   description: One or more groups of policy rules

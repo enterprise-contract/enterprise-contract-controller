@@ -46,6 +46,7 @@ type EnterpriseContractPolicySpec struct {
 	PublicKey string `json:"publicKey,omitempty"`
 	// Arbitrary rule data that will be visible to policy rules
 	// +optional
+	// +kubebuilder:validation:Type:=object
 	RuleData *extv1.JSON `json:"ruleData,omitempty"`
 }
 
