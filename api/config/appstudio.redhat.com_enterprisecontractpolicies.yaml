@@ -83,10 +83,6 @@ spec:
                 rekorUrl:
                   description: URL of the Rekor instance. Empty string disables Rekor integration
                   type: string
-                ruleData:
-                  description: Arbitrary rule data that will be visible to policy rules
-                  type: object
-                  x-kubernetes-preserve-unknown-fields: true
                 sources:
                   description: One or more groups of policy rules
                   items:
@@ -106,6 +102,10 @@ spec:
                           type: string
                         minItems: 1
                         type: array
+                      ruleData:
+                        description: Arbitrary rule data that will be visible to policy rules
+                        type: object
+                        x-kubernetes-preserve-unknown-fields: true
                     type: object
                   minItems: 1
                   type: array

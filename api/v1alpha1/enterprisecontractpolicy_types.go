@@ -44,10 +44,6 @@ type EnterpriseContractPolicySpec struct {
 	// Public key used to validate the signature of images and attestations
 	// +optional
 	PublicKey string `json:"publicKey,omitempty"`
-	// Arbitrary rule data that will be visible to policy rules
-	// +optional
-	// +kubebuilder:validation:Type:=object
-	RuleData *extv1.JSON `json:"ruleData,omitempty"`
 }
 
 // Source defines policies and data that are evaluated together
@@ -61,6 +57,10 @@ type Source struct {
 	// List of go-getter style policy data source urls
 	// +optional
 	Data []string `json:"data,omitempty"`
+	// Arbitrary rule data that will be visible to policy rules
+	// +optional
+	// +kubebuilder:validation:Type:=object
+	RuleData *extv1.JSON `json:"ruleData,omitempty"`
 }
 
 // Authorization defines a release approval
