@@ -125,7 +125,6 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`configuration`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (exclusions and inclusions)
 | *`rekorUrl`* __string__ | URL of the Rekor instance. Empty string disables Rekor integration
 | *`publicKey`* __string__ | Public key used to validate the signature of images and attestations
-| *`ruleData`* __JSON__ | Arbitrary rule data that will be visible to policy rules
 |===
 
 
@@ -145,6 +144,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`name`* __string__ | Optional name for the source
 | *`policy`* __string array__ | List of go-getter style policy source urls
 | *`data`* __string array__ | List of go-getter style policy data source urls
+| *`ruleData`* __JSON__ | Arbitrary rule data that will be visible to policy rules
 |===
 
 

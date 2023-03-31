@@ -27,7 +27,11 @@ import (
 func TestArbitraryRuleDataEncode(t *testing.T) {
 	ecp := EnterpriseContractPolicy{
 		Spec: EnterpriseContractPolicySpec{
-			RuleData: &v1.JSON{Raw: []byte(`{"my":"data","here":14}`)},
+			Sources: []Source{
+				{
+					RuleData: &v1.JSON{Raw: []byte(`{"my":"data","here":14}`)},
+				},
+			},
 		},
 	}
 
@@ -37,7 +41,7 @@ func TestArbitraryRuleDataEncode(t *testing.T) {
 		t.Fatalf("Unexpected error when encoding: %s", err)
 	}
 
-	expected := `{"metadata":{"creationTimestamp":null},"spec":{"ruleData":{"my":"data","here":14}},"status":{}}` + "\n"
+	expected := `{"metadata":{"creationTimestamp":null},"spec":{"sources":[{"ruleData":{"my":"data","here":14}}]},"status":{}}` + "\n"
 	got := out.String()
 	if got != expected {
 		t.Errorf("Expecting encoded to be: %s, but it was %s", expected, got)
@@ -46,13 +50,13 @@ func TestArbitraryRuleDataEncode(t *testing.T) {
 
 func TestArbitraryRuleDataDecode(t *testing.T) {
 	ecp := EnterpriseContractPolicy{}
-	_, _, err := unstructured.UnstructuredJSONScheme.Decode([]byte(`{"apiVersion":"appstudio.redhat.com/v1alpha1","kind":"EnterpriseContractPolicy","spec":{"ruleData":{"my":"data","here":14}},"status":{}}`), nil, &ecp)
+	_, _, err := unstructured.UnstructuredJSONScheme.Decode([]byte(`{"apiVersion":"appstudio.redhat.com/v1alpha1","kind":"EnterpriseContractPolicy","spec":{"sources":[{"ruleData":{"my":"data","here":14}}]}}`), nil, &ecp)
 	if err != nil {
 		t.Fatalf("Unexpected error when encoding: %s", err)
 	}
 
 	expected := `{"my":"data","here":14}`
-	got := string(ecp.Spec.RuleData.Raw)
+	got := string(ecp.Spec.Sources[0].RuleData.Raw)
 	if got != expected {
 		t.Errorf("Expecting decoded to be: %s, but it was %s", expected, got)
 	}
