@@ -3,6 +3,8 @@
 # It should be run by config/default
 resources:
 - bases/appstudio.redhat.com_enterprisecontractpolicies.yaml
+- enterprisecontractpolicy_editor_role.yaml
+- enterprisecontractpolicy_viewer_role.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patchesStrategicMerge:
