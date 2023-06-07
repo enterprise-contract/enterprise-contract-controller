@@ -44,6 +44,9 @@ type EnterpriseContractPolicySpec struct {
 	// Public key used to validate the signature of images and attestations
 	// +optional
 	PublicKey string `json:"publicKey,omitempty"`
+	// Identity to be used for keyless verification. This is an experimental feature.
+	// +optional
+	Identity *Identity `json:"identity,omitempty"`
 }
 
 // Source defines policies and data that are evaluated together
@@ -100,6 +103,24 @@ type EnterpriseContractPolicyConfiguration struct {
 	// +optional
 	// +listType:=set
 	Collections []string `json:"collections,omitempty"`
+}
+
+// Identity defines the allowed identity for keyless signing.
+type Identity struct {
+	// Subject is the URL of the certificate identity for keyless verification.
+	// +optional
+	Subject string `json:"subject,omitempty"`
+	// SubjectRegExp is a regular expression to match the URL of the certificate identity for
+	// keyless verification.
+	// +optional
+	SubjectRegExp string `json:"subjectRegExp,omitempty"`
+	// Issuer is the URL of the certificate OIDC issuer for keyless verification.
+	// +optional
+	Issuer string `json:"issuer,omitempty"`
+	// IssuerRegExp is a regular expression to match the URL of the certificate OIDC issuer for
+	// keyless verification.
+	// +optional
+	IssuerRegExp string `json:"issuerRegExp,omitempty"`
 }
 
 // EnterpriseContractPolicyStatus defines the observed state of EnterpriseContractPolicy

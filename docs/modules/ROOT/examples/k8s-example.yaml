@@ -10,6 +10,7 @@ spec:
     - friday_policy
     - room_temperature
   description: ACME & co policy
+  identity: {}
   sources:
   - data:
     - git::https://github.com/acme/ec-policy.git//data?ref=prod
