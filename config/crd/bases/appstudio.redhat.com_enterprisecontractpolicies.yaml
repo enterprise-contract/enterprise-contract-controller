@@ -76,6 +76,22 @@ spec:
                 description:
                   description: Description of the policy or its intended use
                   type: string
+                identity:
+                  description: Identity to be used for keyless verification. This is an experimental feature.
+                  properties:
+                    issuer:
+                      description: Issuer is the URL of the certificate OIDC issuer for keyless verification.
+                      type: string
+                    issuerRegExp:
+                      description: IssuerRegExp is a regular expression to match the URL of the certificate OIDC issuer for keyless verification.
+                      type: string
+                    subject:
+                      description: Subject is the URL of the certificate identity for keyless verification.
+                      type: string
+                    subjectRegExp:
+                      description: SubjectRegExp is a regular expression to match the URL of the certificate identity for keyless verification.
+                      type: string
+                  type: object
                 publicKey:
                   description: Public key used to validate the signature of images and attestations
                   type: string
