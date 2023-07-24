@@ -38,9 +38,12 @@ type EnterpriseContractPolicySpec struct {
 	// Configuration handles policy modification configuration (exclusions and inclusions)
 	// +optional
 	Configuration *EnterpriseContractPolicyConfiguration `json:"configuration,omitempty"`
-	// URL of the Rekor instance. Empty string disables Rekor integration
+	// URL of the Rekor instance
 	// +optional
 	RekorUrl string `json:"rekorUrl,omitempty"`
+	// Whether or not to skip Rekor during verification
+	// +optional
+	IgnoreRekor bool `json:"ignoreRekor,omitempty"`
 	// Public key used to validate the signature of images and attestations
 	// +optional
 	PublicKey string `json:"publicKey,omitempty"`
