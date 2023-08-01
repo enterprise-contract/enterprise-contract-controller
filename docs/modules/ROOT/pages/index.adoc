@@ -1,9 +1,8 @@
 = About Enterprise Contract Policy
 
-The Enterprise Contract Policy defines the configuration for the enforcement of
-the Enterprise Contract by specifying rules and authorizations needed for a
-container image built in Red Hat Trusted Application Pipeline to be compliant
-with organization's software release policy requirements.
+The Enterprise Contract Policy defines the configuration for the enforcement of the Enterprise
+Contract by specifying the rules needed for a container image to be compliant with an organization's
+software release policy requirements.
 
 The Enterprise Contract Policy is passed in the form of a configuration to the
 xref:ec-cli:ROOT:index.adoc[EC CLI] to
