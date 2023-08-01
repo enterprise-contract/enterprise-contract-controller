@@ -31,26 +31,6 @@ spec:
             spec:
               description: EnterpriseContractPolicySpec is used to configure the Enterprise Contract Policy
               properties:
-                authorization:
-                  description: Authorization for per component release approvals
-                  properties:
-                    components:
-                      description: Components based authorization
-                      items:
-                        description: Authorization defines a release approval on a component basis
-                        properties:
-                          authorizer:
-                            description: Authorizer is the email address of the person authorizing the release
-                            type: string
-                          changeId:
-                            description: ChangeID is the identifier of the change, e.g. git commit id
-                            type: string
-                          repository:
-                            description: Repository of the component sources
-                            type: string
-                        type: object
-                      type: array
-                  type: object
                 configuration:
                   description: Configuration handles policy modification configuration (exclusions and inclusions)
                   properties:

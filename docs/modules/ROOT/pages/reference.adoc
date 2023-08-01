@@ -19,38 +19,6 @@ Package v1alpha1 contains API Schema definitions for the appstudio.redhat.com v1
 
 
 
-[id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-authorization"]
-==== Authorization
-
-Authorization defines a release approval
-
-[quote]
-Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
-
-[cols="25a,75a", options="header"]
-|===
-| Field | Description
-| *`components`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-authorizedcomponent[$$AuthorizedComponent$$] array__ | Components based authorization
-|===
-
-
-[id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-authorizedcomponent"]
-==== AuthorizedComponent
-
-Authorization defines a release approval on a component basis
-
-[quote]
-Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]
-
-[cols="25a,75a", options="header"]
-|===
-| Field | Description
-| *`changeId`* __string__ | ChangeID is the identifier of the change, e.g. git commit id
-| *`repository`* __string__ | Repository of the component sources
-| *`authorizer`* __string__ | Authorizer is the email address of the person authorizing the release
-|===
-
-
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy"]
 ==== EnterpriseContractPolicy
 
@@ -123,7 +91,6 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | Field | Description
 | *`description`* __string__ | Description of the policy or its intended use
 | *`sources`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$] array__ | One or more groups of policy rules
-| *`authorization`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-authorization[$$Authorization$$]__ | Authorization for per component release approvals
 | *`configuration`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (exclusions and inclusions)
 | *`rekorUrl`* __string__ | URL of the Rekor instance. Empty string disables Rekor integration
 | *`publicKey`* __string__ | Public key used to validate the signature of images and attestations

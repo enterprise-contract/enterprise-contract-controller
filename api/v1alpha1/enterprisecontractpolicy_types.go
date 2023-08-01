@@ -32,9 +32,6 @@ type EnterpriseContractPolicySpec struct {
 	// One or more groups of policy rules
 	// +kubebuilder:validation:MinItems:=1
 	Sources []Source `json:"sources,omitempty"`
-	// Authorization for per component release approvals
-	// +optional
-	Authorization *Authorization `json:"authorization,omitempty"`
 	// Configuration handles policy modification configuration (exclusions and inclusions)
 	// +optional
 	Configuration *EnterpriseContractPolicyConfiguration `json:"configuration,omitempty"`
@@ -64,26 +61,6 @@ type Source struct {
 	// +optional
 	// +kubebuilder:validation:Type:=object
 	RuleData *extv1.JSON `json:"ruleData,omitempty"`
-}
-
-// Authorization defines a release approval
-type Authorization struct {
-	// Components based authorization
-	// +optional
-	Components []AuthorizedComponent `json:"components,omitempty"`
-}
-
-// Authorization defines a release approval on a component basis
-type AuthorizedComponent struct {
-	// ChangeID is the identifier of the change, e.g. git commit id
-	// +optional
-	ChangeID string `json:"changeId,omitempty"`
-	// Repository of the component sources
-	// +optional
-	Repository string `json:"repository,omitempty"`
-	// Authorizer is the email address of the person authorizing the release
-	// +optional
-	Authorizer string `json:"authorizer,omitempty"`
 }
 
 // EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
