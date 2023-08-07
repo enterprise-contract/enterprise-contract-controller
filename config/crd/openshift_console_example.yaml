@@ -20,7 +20,7 @@ spec:
           - "@slsa1"
           - "@slsa2"
           - "@acme"
-      publicKey: k8s://tekton-chains/public-key
+      publicKey: k8s://openshift-pipelines/public-key
       sources:
         - name: Default EC Policies
           data:
