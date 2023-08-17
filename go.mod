@@ -1,6 +1,6 @@
 module github.com/enterprise-contract/enterprise-contract-controller
 
-go 1.19
+go 1.20
 
 require (
 	github.com/enterprise-contract/enterprise-contract-controller/api v0.0.0-00010101000000-000000000000
