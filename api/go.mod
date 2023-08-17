@@ -1,6 +1,6 @@
 module github.com/enterprise-contract/enterprise-contract-controller/api
 
-go 1.19
+go 1.20
 
 require (
 	k8s.io/apiextensions-apiserver v0.27.4
