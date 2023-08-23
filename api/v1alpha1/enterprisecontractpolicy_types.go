@@ -109,8 +109,7 @@ type EnterpriseContractPolicyStatus struct {
 }
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:categories=all
-// +kubebuilder:resource:shortName=ecp
+// +kubebuilder:resource:categories={all},shortName={ecp}
 // +kubebuilder:subresource:status
 // EnterpriseContractPolicy is the Schema for the enterprisecontractpolicies API
 type EnterpriseContractPolicy struct {
