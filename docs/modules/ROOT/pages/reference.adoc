@@ -2,14 +2,14 @@
 :anchor_prefix: k8s-api
 
 [id="api-reference"]
-== API Reference
+= API Reference
 
 .Packages
 - xref:{anchor_prefix}-appstudio-redhat-com-v1alpha1[$$appstudio.redhat.com/v1alpha1$$]
 
 
 [id="{anchor_prefix}-appstudio-redhat-com-v1alpha1"]
-=== appstudio.redhat.com/v1alpha1
+== appstudio.redhat.com/v1alpha1
 
 Package v1alpha1 contains API Schema definitions for the appstudio.redhat.com v1alpha1 API group
 
@@ -20,7 +20,7 @@ Package v1alpha1 contains API Schema definitions for the appstudio.redhat.com v1
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy"]
-==== EnterpriseContractPolicy
+=== EnterpriseContractPolicy
 
 EnterpriseContractPolicy is the Schema for the enterprisecontractpolicies API
 
@@ -42,7 +42,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration"]
-==== EnterpriseContractPolicyConfiguration
+=== EnterpriseContractPolicyConfiguration
 
 EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
 
@@ -59,7 +59,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicylist"]
-==== EnterpriseContractPolicyList
+=== EnterpriseContractPolicyList
 
 EnterpriseContractPolicyList contains a list of EnterpriseContractPolicy
 
@@ -79,7 +79,7 @@ EnterpriseContractPolicyList contains a list of EnterpriseContractPolicy
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec"]
-==== EnterpriseContractPolicySpec
+=== EnterpriseContractPolicySpec
 
 EnterpriseContractPolicySpec is used to configure the Enterprise Contract Policy
 
@@ -101,7 +101,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-identity"]
-==== Identity
+=== Identity
 
 Identity defines the allowed identity for keyless signing.
 
@@ -119,7 +119,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-source"]
-==== Source
+=== Source
 
 Source defines policies and data that are evaluated together
 
