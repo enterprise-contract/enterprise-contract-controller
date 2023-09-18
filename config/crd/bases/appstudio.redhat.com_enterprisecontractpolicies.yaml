@@ -85,6 +85,22 @@ spec:
                   items:
                     description: Source defines policies and data that are evaluated together
                     properties:
+                      config:
+                        description: Config specifies which policy rules are included, or excluded, from the provided policy source urls.
+                        properties:
+                          exclude:
+                            description: Exclude is a set of policy exclusions that, in case of failure, do not block the success of the outcome.
+                            items:
+                              type: string
+                            type: array
+                            x-kubernetes-list-type: set
+                          include:
+                            description: Include is a set of policy inclusions that are added to the policy evaluation. These take precedence over policy exclusions.
+                            items:
+                              type: string
+                            type: array
+                            x-kubernetes-list-type: set
+                        type: object
                       data:
                         description: List of go-getter style policy data source urls
                         items:

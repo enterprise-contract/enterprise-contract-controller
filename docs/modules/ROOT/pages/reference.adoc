@@ -44,7 +44,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration"]
 === EnterpriseContractPolicyConfiguration
 
-EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
+EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation. DEPRECATED: Use the config for a policy source instead.
 
 [quote]
 Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyspec[$$EnterpriseContractPolicySpec$$]
@@ -133,6 +133,23 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`policy`* __string array__ | List of go-getter style policy source urls
 | *`data`* __string array__ | List of go-getter style policy data source urls
 | *`ruleData`* __JSON__ | Arbitrary rule data that will be visible to policy rules
+| *`config`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-sourceconfig[$$SourceConfig$$]__ | Config specifies which policy rules are included, or excluded, from the provided policy source urls.
+|===
+
+
+[id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-sourceconfig"]
+=== SourceConfig
+
+SourceConfig specifies config options for a policy source.
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`exclude`* __string array__ | Exclude is a set of policy exclusions that, in case of failure, do not block the success of the outcome.
+| *`include`* __string array__ | Include is a set of policy inclusions that are added to the policy evaluation. These take precedence over policy exclusions.
 |===
 
 
