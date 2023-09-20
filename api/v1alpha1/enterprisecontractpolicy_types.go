@@ -61,9 +61,29 @@ type Source struct {
 	// +optional
 	// +kubebuilder:validation:Type:=object
 	RuleData *extv1.JSON `json:"ruleData,omitempty"`
+	// Config specifies which policy rules are included, or excluded, from the
+	// provided policy source urls.
+	// +optional
+	// +kubebuilder:validation:Type:=object
+	Config *SourceConfig `json:"config,omitempty"`
 }
 
-// EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation
+// SourceConfig specifies config options for a policy source.
+type SourceConfig struct {
+	// Exclude is a set of policy exclusions that, in case of failure, do not block
+	// the success of the outcome.
+	// +optional
+	// +listType:=set
+	Exclude []string `json:"exclude,omitempty"`
+	// Include is a set of policy inclusions that are added to the policy evaluation.
+	// These take precedence over policy exclusions.
+	// +optional
+	// +listType:=set
+	Include []string `json:"include,omitempty"`
+}
+
+// EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation.
+// DEPRECATED: Use the config for a policy source instead.
 type EnterpriseContractPolicyConfiguration struct {
 	// Exclude set of policy exclusions that, in case of failure, do not block
 	// the success of the outcome.
