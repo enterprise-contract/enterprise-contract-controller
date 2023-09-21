@@ -89,6 +89,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 [cols="25a,75a", options="header"]
 |===
 | Field | Description
+| *`name`* __string__ | Optional name of the policy
 | *`description`* __string__ | Description of the policy or its intended use
 | *`sources`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$] array__ | One or more groups of policy rules
 | *`configuration`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicyconfiguration[$$EnterpriseContractPolicyConfiguration$$]__ | Configuration handles policy modification configuration (exclusions and inclusions)

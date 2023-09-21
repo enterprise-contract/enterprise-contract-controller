@@ -26,6 +26,9 @@ import (
 
 // EnterpriseContractPolicySpec is used to configure the Enterprise Contract Policy
 type EnterpriseContractPolicySpec struct {
+	// Optional name of the policy
+	// +optional
+	Name string `json:"name,omitempty"`
 	// Description of the policy or its intended use
 	// +optional
 	Description string `json:"description,omitempty"`
