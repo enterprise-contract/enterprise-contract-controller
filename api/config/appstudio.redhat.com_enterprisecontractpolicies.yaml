@@ -74,6 +74,9 @@ spec:
                       description: SubjectRegExp is a regular expression to match the URL of the certificate identity for keyless verification.
                       type: string
                   type: object
+                name:
+                  description: Optional name of the policy
+                  type: string
                 publicKey:
                   description: Public key used to validate the signature of images and attestations
                   type: string
