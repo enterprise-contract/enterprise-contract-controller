@@ -3,7 +3,7 @@ module github.com/enterprise-contract/enterprise-contract-controller/tools
 go 1.20
 
 require (
-	github.com/elastic/crd-ref-docs v0.0.9
+	github.com/elastic/crd-ref-docs v0.0.10
 	sigs.k8s.io/controller-runtime/tools/setup-envtest v0.0.0-20221124082817-e57ce7861d5a
 	sigs.k8s.io/controller-tools v0.13.0
 	sigs.k8s.io/kustomize/kustomize/v4 v4.5.7
