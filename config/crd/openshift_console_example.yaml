@@ -24,7 +24,7 @@ spec:
       sources:
         - name: Default EC Policies
           data:
-            - oci::quay.io/hacbs-contract/ec-policy-data:latest
+            - git::https://github.com/enterprise-contract/ec-policies//example/data
           policy:
             - oci::quay.io/hacbs-contract/ec-release-policy:latest
           ruleData:
