@@ -69,6 +69,11 @@ type Source struct {
 	// +optional
 	// +kubebuilder:validation:Type:=object
 	Config *SourceConfig `json:"config,omitempty"`
+	// Specifies volatile configuration that can include or exclude policy rules
+	// based on effective time.
+	// +optional
+	// +kubebuilder:validation:Type:=object
+	VolatileConfig *VolatileSourceConfig `json:"volatileConfig,omitempty"`
 }
 
 // SourceConfig specifies config options for a policy source.
@@ -83,6 +88,32 @@ type SourceConfig struct {
 	// +optional
 	// +listType:=set
 	Include []string `json:"include,omitempty"`
+}
+
+type VolatileCriteria struct {
+	Value string `json:"value"`
+	// +optional
+	// +kubebuilder:validation:Format:=date-time
+	EffectiveOn string `json:"effectiveOn,omitempty"`
+	// +optional
+	// +kubebuilder:validation:Format:=date-time
+	EffectiveUntil string `json:"effectiveUntil,omitempty"`
+}
+
+// VolatileSourceConfig specifies volatile configuration for a policy source.
+type VolatileSourceConfig struct {
+	// Exclude is a set of policy exclusions that, in case of failure, do not block
+	// the success of the outcome.
+	// +optional
+	// +listType:=map
+	// +listMapKey:=value
+	Exclude []VolatileCriteria `json:"exclude,omitempty"`
+	// Include is a set of policy inclusions that are added to the policy evaluation.
+	// These take precedence over policy exclusions.
+	// +optional
+	// +listType:=map
+	// +listMapKey:=value
+	Include []VolatileCriteria `json:"include,omitempty"`
 }
 
 // EnterpriseContractPolicyConfiguration configuration of modifications to policy evaluation.

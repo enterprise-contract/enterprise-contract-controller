@@ -122,6 +122,48 @@ spec:
                         description: Arbitrary rule data that will be visible to policy rules
                         type: object
                         x-kubernetes-preserve-unknown-fields: true
+                      volatileConfig:
+                        description: Specifies volatile configuration that can include or exclude policy rules based on effective time.
+                        properties:
+                          exclude:
+                            description: Exclude is a set of policy exclusions that, in case of failure, do not block the success of the outcome.
+                            items:
+                              properties:
+                                effectiveOn:
+                                  format: date-time
+                                  type: string
+                                effectiveUntil:
+                                  format: date-time
+                                  type: string
+                                value:
+                                  type: string
+                              required:
+                                - value
+                              type: object
+                            type: array
+                            x-kubernetes-list-map-keys:
+                              - value
+                            x-kubernetes-list-type: map
+                          include:
+                            description: Include is a set of policy inclusions that are added to the policy evaluation. These take precedence over policy exclusions.
+                            items:
+                              properties:
+                                effectiveOn:
+                                  format: date-time
+                                  type: string
+                                effectiveUntil:
+                                  format: date-time
+                                  type: string
+                                value:
+                                  type: string
+                              required:
+                                - value
+                              type: object
+                            type: array
+                            x-kubernetes-list-map-keys:
+                              - value
+                            x-kubernetes-list-type: map
+                        type: object
                     type: object
                   minItems: 1
                   type: array

@@ -143,6 +143,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`data`* __string array__ | List of go-getter style policy data source urls
 | *`ruleData`* __xref:{anchor_prefix}-k8s-io-apiextensions-apiserver-pkg-apis-apiextensions-v1-json[$$JSON$$]__ | Arbitrary rule data that will be visible to policy rules
 | *`config`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-sourceconfig[$$SourceConfig$$]__ | Config specifies which policy rules are included, or excluded, from the provided policy source urls.
+| *`volatileConfig`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilesourceconfig[$$VolatileSourceConfig$$]__ | Specifies volatile configuration that can include or exclude policy rules based on effective time.
 |===
 
 
@@ -159,6 +160,32 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | Field | Description
 | *`exclude`* __string array__ | Exclude is a set of policy exclusions that, in case of failure, do not block the success of the outcome.
 | *`include`* __string array__ | Include is a set of policy inclusions that are added to the policy evaluation. These take precedence over policy exclusions.
+|===
+
+
+[id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilecriteria"]
+=== VolatileCriteria (xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-struct-value string -json-value- effectiveon string -json-effectiveon-omitempty- effectiveuntil string -json-effectiveuntil-omitempty-[$$struct{Value string "json:\"value\""; EffectiveOn string "json:\"effectiveOn,omitempty\""; EffectiveUntil string "json:\"effectiveUntil,omitempty\""}$$])
+
+
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilesourceconfig[$$VolatileSourceConfig$$]
+
+
+
+[id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilesourceconfig"]
+=== VolatileSourceConfig
+
+VolatileSourceConfig specifies volatile configuration for a policy source.
+
+[quote]
+Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-source[$$Source$$]
+
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`exclude`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilecriteria[$$VolatileCriteria$$] array__ | Exclude is a set of policy exclusions that, in case of failure, do not block the success of the outcome.
+| *`include`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilecriteria[$$VolatileCriteria$$] array__ | Include is a set of policy inclusions that are added to the policy evaluation. These take precedence over policy exclusions.
 |===
 
 
