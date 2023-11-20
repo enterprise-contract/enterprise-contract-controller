@@ -3,8 +3,8 @@ module github.com/enterprise-contract/enterprise-contract-controller/api
 go 1.20
 
 require (
-	k8s.io/apiextensions-apiserver v0.28.3
-	k8s.io/apimachinery v0.28.3
+	k8s.io/apiextensions-apiserver v0.28.4
+	k8s.io/apimachinery v0.28.4
 	sigs.k8s.io/controller-runtime v0.16.3
 )
 
