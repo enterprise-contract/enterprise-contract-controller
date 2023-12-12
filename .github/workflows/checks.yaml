@@ -47,6 +47,8 @@ jobs:
           files: ./api_cover.out
           flags: api
 
+      # If enterprisecontractpolicy_types.go is updated without a corresponding change to the crd
+      # an uncommitted change can show.
       - name: Check for uncommitted changes
         run: |
           if ! git diff --exit-code -s; then
