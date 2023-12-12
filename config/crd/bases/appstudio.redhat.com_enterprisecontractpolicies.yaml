@@ -128,6 +128,7 @@ spec:
                           exclude:
                             description: Exclude is a set of policy exclusions that, in case of failure, do not block the success of the outcome.
                             items:
+                              description: VolatileCriteria includes or excludes a policy rule with effective dates as an option.
                               properties:
                                 effectiveOn:
                                   format: date-time
@@ -147,6 +148,7 @@ spec:
                           include:
                             description: Include is a set of policy inclusions that are added to the policy evaluation. These take precedence over policy exclusions.
                             items:
+                              description: VolatileCriteria includes or excludes a policy rule with effective dates as an option.
                               properties:
                                 effectiveOn:
                                   format: date-time
