@@ -90,6 +90,7 @@ type SourceConfig struct {
 	Include []string `json:"include,omitempty"`
 }
 
+// VolatileCriteria includes or excludes a policy rule with effective dates as an option.
 type VolatileCriteria struct {
 	Value string `json:"value"`
 	// +optional
