@@ -57,7 +57,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
-          name: Rolling release
-          body: Release ${{env.version}}
+          name: Release ${{env.version}}
           tag_name: ${{env.version}}
           generate_release_notes: true
