@@ -51,12 +51,12 @@ jobs:
           set -o pipefail
           set -o nounset
 
-          latest=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo 0.1.0)
+          latest=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo api/v0.1.0)
           echo "version="${latest%.*}".$(git rev-list --count "${latest}"..HEAD || echo 0)" >> "$GITHUB_ENV"
 
-      - name: Release
+      - name: API Release
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
-          name: Release ${{env.version}}
-          tag_name: v${{env.version}}
+          name: API Release ${{env.version}}
+          tag_name: ${{env.version}}
           generate_release_notes: true
