@@ -47,7 +47,7 @@ help: ## Display this help.
 
 .PHONY: docs
 docs: $(wildcard $(CRD_DEF)/*.go) ## Generate documentation
-	@go run -modfile tools/go.mod github.com/elastic/crd-ref-docs --config=docs/config.yaml --source-path=$(CRD_DEF) --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
+	@go run -modfile tools/go.mod github.com/elastic/crd-ref-docs --max-depth 50 --config=docs/config.yaml --source-path=$(CRD_DEF) --templates-dir=docs/templates --output-path=docs/modules/ROOT/pages/reference.adoc
 	@go run ./docs
 
 GEN_DEPS=\
