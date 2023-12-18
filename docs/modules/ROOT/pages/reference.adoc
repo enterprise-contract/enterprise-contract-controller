@@ -164,13 +164,20 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilecriteria"]
-=== VolatileCriteria (xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-struct-value string -json-value- effectiveon string -json-effectiveon-omitempty- effectiveuntil string -json-effectiveuntil-omitempty-[$$struct{Value string "json:\"value\""; EffectiveOn string "json:\"effectiveOn,omitempty\""; EffectiveUntil string "json:\"effectiveUntil,omitempty\""}$$])
+=== VolatileCriteria
 
-
+VolatileCriteria includes or excludes a policy rule with effective dates as an option.
 
 [quote]
 Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilesourceconfig[$$VolatileSourceConfig$$]
 
+[cols="25a,75a", options="header"]
+|===
+| Field | Description
+| *`value`* __string__ | 
+| *`effectiveOn`* __string__ | 
+| *`effectiveUntil`* __string__ | 
+|===
 
 
 [id="{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilesourceconfig"]
