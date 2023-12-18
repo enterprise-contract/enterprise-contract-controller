@@ -1,9 +1,5 @@
 # Build the manager binary
-# FROM docker.io/library/golang:1.23@sha256:098d628490c97d4419ed44a23d893f37b764f3bea06e0827183e8af4120e19be as builder
-# Currently, there is no official container image for Go 1.24. As a workaround, we start with the
-# generic Fedora image and install Go in it.
-FROM registry.fedoraproject.org/fedora-minimal:latest@sha256:f34c3b3aa56c88b153c747f32592ff37ece4606951291a7ddc507778d207f21c as builder
-RUN microdnf install -y golang
+FROM docker.io/library/golang:1.21@sha256:2ff79bcdaff74368a9fdcb06f6599e54a71caf520fd2357a55feddd504bcaffb as builder
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
