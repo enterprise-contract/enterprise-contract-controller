@@ -25,6 +25,7 @@ function debug() {
     >&2 echo "DEBUG: ${1}"
 }
 
+# E.g. api/v0.1.33
 latest_version="$(git tag | sort -V -r | head -n 1)"
 debug "Latest version: ${latest_version}"
 
