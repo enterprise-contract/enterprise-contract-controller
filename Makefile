@@ -8,7 +8,6 @@ ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 CONTROLLER_GEN = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen
 KUSTOMIZE = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/kustomize/kustomize/v4
 ENVTEST = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/controller-runtime/tools/setup-envtest
-
 CRD_DEF = ./api/v1alpha1
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
@@ -107,6 +106,9 @@ endif
 docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
 
+.PHONY: export-schema
+export-schema: ## Export the CRD schema to the schema directory as a json-store.org schema.
+	go run -modfile $(ROOT)schema/go.mod schema/export.go $(ROOT)dist github.com/enterprise-contract/enterprise-contract-controller ./api/v1alpha1/
 ##@ Deployment
 
 ifndef ignore-not-found
