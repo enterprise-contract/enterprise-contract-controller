@@ -68,6 +68,7 @@ manifests: api/config/appstudio.redhat.com_enterprisecontractpolicies.yaml ## Ge
 .PHONY: generate
 generate: $(GEN_DEPS) ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths=./...
+	cd api && go generate ./...
 
 .PHONY: fmt
 fmt: ## Run go fmt against code.
@@ -107,8 +108,9 @@ docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
 
 .PHONY: export-schema
-export-schema: ## Export the CRD schema to the schema directory as a json-store.org schema.
-	go run -modfile $(ROOT)schema/go.mod schema/export.go $(ROOT)dist github.com/enterprise-contract/enterprise-contract-controller ./api/v1alpha1/
+export-schema: generate ## Export the CRD schema to the schema directory as a json-store.org schema.
+	cp api/v1alpha1/policy_spec.json dist/
+
 ##@ Deployment
 
 ifndef ignore-not-found
