@@ -51,6 +51,14 @@ jobs:
           files: ./api_cover.out
           flags: api
 
+      - name: Upload schema test coverage report
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: ./schema_cover.out
+          flags: schema
+
       # If enterprisecontractpolicy_types.go is updated without a corresponding change to the crd
       # an uncommitted change can show.
       - name: Check for uncommitted changes
