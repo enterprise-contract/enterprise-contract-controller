@@ -21,10 +21,16 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"reflect"
 
 	"github.com/enterprise-contract/enterprise-contract-controller/api/v1alpha1"
 	"github.com/invopop/jsonschema"
 	"github.com/spf13/afero"
+	extv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+)
+
+var (
+	jsonType = reflect.TypeOf(extv1.JSON{})
 )
 
 func main() {
@@ -73,11 +79,15 @@ func writeSchemaToFile(schemaDir string, schema []byte, fileName string) error {
 // Create a JSON schema from a Go type, and return the JSON as a byte slice
 func JsonSchemaFromPolicySpec(ecp *v1alpha1.EnterpriseContractPolicySpec, repo, dir string) ([]byte, error) {
 	// Create a JSON schema from a Go type
-	r := new(jsonschema.Reflector)
+	r := jsonschema.Reflector{}
 	if err := r.AddGoComments(repo, dir); err != nil {
 		return nil, err
 	}
 	schema := r.Reflect(ecp)
+
+	// allow any property in the "JSON" type definition
+	schema.Definitions["JSON"].AdditionalProperties = jsonschema.TrueSchema
+
 	prettyJSON, err := json.MarshalIndent(schema, "", "  ")
 	if err != nil {
 		return nil, err
