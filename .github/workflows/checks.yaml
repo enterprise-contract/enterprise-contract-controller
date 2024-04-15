@@ -36,7 +36,7 @@ jobs:
         run: make test
 
       - name: Upload unit test coverage report
-        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
+        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
@@ -44,7 +44,7 @@ jobs:
           flags: controller
 
       - name: Upload api test coverage report
-        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
+        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
@@ -52,7 +52,7 @@ jobs:
           flags: api
 
       - name: Upload schema test coverage report
-        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
+        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
