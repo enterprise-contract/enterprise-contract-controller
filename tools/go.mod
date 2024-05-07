@@ -1,6 +1,8 @@
 module github.com/enterprise-contract/enterprise-contract-controller/tools
 
-go 1.20
+go 1.21
+
+toolchain go1.21.4
 
 require (
 	github.com/elastic/crd-ref-docs v0.0.12
