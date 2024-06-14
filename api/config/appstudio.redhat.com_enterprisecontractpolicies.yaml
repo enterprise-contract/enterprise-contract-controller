@@ -165,6 +165,10 @@ spec:
                                 effectiveUntil:
                                   format: date-time
                                   type: string
+                                imageRef:
+                                  description: ImageRef is used to specify an image by its digest.
+                                  pattern: ^sha256:[a-fA-F0-9]{64}$
+                                  type: string
                                 value:
                                   type: string
                               required:
@@ -186,6 +190,10 @@ spec:
                                   type: string
                                 effectiveUntil:
                                   format: date-time
+                                  type: string
+                                imageRef:
+                                  description: ImageRef is used to specify an image by its digest.
+                                  pattern: ^sha256:[a-fA-F0-9]{64}$
                                   type: string
                                 value:
                                   type: string
