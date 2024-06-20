@@ -167,6 +167,10 @@
         "effectiveUntil": {
           "type": "string",
           "description": "+optional\n+kubebuilder:validation:Format:=date-time"
+        },
+        "imageRef": {
+          "type": "string",
+          "description": "ImageRef is used to specify an image by its digest.\n+optional\n+kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`"
         }
       },
       "additionalProperties": false,
