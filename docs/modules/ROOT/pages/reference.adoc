@@ -161,7 +161,7 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`name`* __string__ | Optional name for the source +
 | *`policy`* __string array__ | List of go-getter style policy source urls +
 | *`data`* __string array__ | List of go-getter style policy data source urls +
-| *`ruleData`* __xref:{anchor_prefix}-k8s-io-apiextensions-apiserver-pkg-apis-apiextensions-v1-json[$$JSON$$]__ | Arbitrary rule data that will be visible to policy rules +
+| *`ruleData`* __link:https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#json-v1-apiextensions-k8s-io[$$JSON$$]__ | Arbitrary rule data that will be visible to policy rules +
 | *`config`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-sourceconfig[$$SourceConfig$$]__ | Config specifies which policy rules are included, or excluded, from the +
 provided policy source urls. +
 | *`volatileConfig`* __xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-volatilesourceconfig[$$VolatileSourceConfig$$]__ | Specifies volatile configuration that can include or exclude policy rules +
