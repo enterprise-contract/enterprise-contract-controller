@@ -8,13 +8,13 @@
       ],
       "data": [
         "git::https://github.com/acme/ec-policy.git//data?ref=prod"
-      ],
-      "config": {
-        "exclude": [
-          "friday_policy",
-          "room_temperature"
-        ]
-      }
+      ]
     }
-  ]
+  ],
+  "configuration": {
+    "exclude": [
+      "friday_policy",
+      "room_temperature"
+    ]
+  }
 }
