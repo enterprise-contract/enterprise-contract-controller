@@ -5,6 +5,10 @@ metadata:
   name: ec-policy
   namespace: acme
 spec:
+  configuration:
+    exclude:
+    - friday_policy
+    - room_temperature
   description: ACME & co policy
   sources:
   - data:
@@ -12,8 +16,4 @@ spec:
     name: simple
     policy:
     - git::https://github.com/acme/ec-policy.git//policy?ref=prod
-    config:
-      exclude:
-      - friday_policy
-      - room_temperature
 status: {}
