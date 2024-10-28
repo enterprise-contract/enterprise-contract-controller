@@ -32,6 +32,9 @@ jobs:
           go-version-file: go.mod
           cache-dependency-path: '**/go.sum'
 
+      - name: Check go versions
+        uses: enterprise-contract/github-workflows/golang-version-check@main
+
       - name: Test
         run: make test
 
