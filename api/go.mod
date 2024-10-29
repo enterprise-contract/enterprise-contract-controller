@@ -4,7 +4,7 @@ go 1.22 // allow
 
 require (
 	k8s.io/apiextensions-apiserver v0.29.9
-	k8s.io/apimachinery v0.29.9
+	k8s.io/apimachinery v0.29.10
 	sigs.k8s.io/controller-runtime v0.17.6
 )
 
