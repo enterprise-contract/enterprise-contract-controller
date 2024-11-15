@@ -111,14 +111,10 @@ type VolatileSourceConfig struct {
 	// Exclude is a set of policy exclusions that, in case of failure, do not block
 	// the success of the outcome.
 	// +optional
-	// +listType:=map
-	// +listMapKey:=value
 	Exclude []VolatileCriteria `json:"exclude,omitempty"`
 	// Include is a set of policy inclusions that are added to the policy evaluation.
 	// These take precedence over policy exclusions.
 	// +optional
-	// +listType:=map
-	// +listMapKey:=value
 	Include []VolatileCriteria `json:"include,omitempty"`
 }
 
