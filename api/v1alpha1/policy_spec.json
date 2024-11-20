@@ -187,14 +187,14 @@
             "$ref": "#/$defs/VolatileCriteria"
           },
           "type": "array",
-          "description": "Exclude is a set of policy exclusions that, in case of failure, do not block\nthe success of the outcome.\n+optional\n+listType:=map\n+listMapKey:=value"
+          "description": "Exclude is a set of policy exclusions that, in case of failure, do not block\nthe success of the outcome.\n+optional"
         },
         "include": {
           "items": {
             "$ref": "#/$defs/VolatileCriteria"
           },
           "type": "array",
-          "description": "Include is a set of policy inclusions that are added to the policy evaluation.\nThese take precedence over policy exclusions.\n+optional\n+listType:=map\n+listMapKey:=value"
+          "description": "Include is a set of policy inclusions that are added to the policy evaluation.\nThese take precedence over policy exclusions.\n+optional"
         }
       },
       "additionalProperties": false,
