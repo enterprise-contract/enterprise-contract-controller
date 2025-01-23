@@ -1,8 +1,12 @@
 # Enterprise Contract controller
-A Kubernetes controller for Enterprise Contract resources.
+
+A Kubernetes controller that defines a CRD for Conforma (formerly known as Enterprise Contract) resources.
 
 ## Description
 Currently contains `EnterpriseContractConfiguration` Kubernetes custom resource. See an [example](config/samples/appstudio.redhat.com_v1alpha1_enterprisecontractpolicy.yaml).
+
+> [!NOTE]
+> Enterprise Contract is now called Conforma. However, because changing the CRD and controller name would have a large impact, we're not going to rename them at this stage.
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
