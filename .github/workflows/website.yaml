@@ -30,6 +30,13 @@ permissions:
 jobs:
   website_update:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - APP_INSTALL_ID: 29980719
+            REPOSITORY: enterprise-contract/enterprise-contract.github.io
+          - APP_INSTALL_ID: 59973090
+            REPOSITORY: conforma/conforma.github.io
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
@@ -49,5 +56,5 @@ jobs:
             echo "${header}.${payload}.${signature}"
           }
 
-          GITHUB_TOKEN=$(curl -s -X POST -H "Authorization: Bearer $(createJWT)" -H "Accept: application/vnd.github+json" https://api.github.com/app/installations/29980719/access_tokens | jq -r .token) \
-          gh api repos/enterprise-contract/enterprise-contract.github.io/dispatches -X POST --input <(echo '{"event_type":"update","client_payload":{}}')
+          GITHUB_TOKEN=$(curl -s -X POST -H "Authorization: Bearer $(createJWT)" -H "Accept: application/vnd.github+json" https://api.github.com/app/installations/${{ matrix.APP_INSTALL_ID }}/access_tokens | jq -r .token) \
+          gh api repos/${{ matrix.REPOSITORY }}/dispatches -X POST --input <(echo '{"event_type":"update","client_payload":{}}')
