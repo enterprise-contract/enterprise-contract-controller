@@ -1,4 +1,13 @@
-= About Enterprise Contract Policy
+= About Conforma Policy
+
+NOTE: Conforma was previously known as "Enterprise Contract". In general you
+can consider "Conforma" and "Enterprise Contract" to be synonynous. See
+link:/posts/whats-in-a-name/[this article] for more details about the name
+change. However, because renaming the CRD and the controller is a large and
+significant change that impacts multiple other systems, the controller and the
+CRD are going to keep their original names, at least in the short and medium
+term. As a consequence this documentation will continue to refer to "Enterprise
+Contract" in many places.
 
 The Enterprise Contract Policy defines the configuration for the enforcement of the Enterprise
 Contract by specifying the rules needed for a container image to be compliant with an organization's

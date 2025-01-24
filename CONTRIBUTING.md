@@ -1,6 +1,6 @@
 # Contributing
 
-Enterprise Contract welcomes contributions in many forms. [Pull requests](https://docs.github.com/en/get-started/quickstart/github-glossary#pull-request) are specifically appreciated and the maintainers will make every effort to assist with any issues in the pull request discussion. Feel free to create a pull request even if you are new to the process. If you need more information, see [this article](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) about how creating a pull request.
+Conforma (formerly known as Enterprise Contract) welcomes contributions in many forms. [Pull requests](https://docs.github.com/en/get-started/quickstart/github-glossary#pull-request) are specifically appreciated and the maintainers will make every effort to assist with any issues in the pull request discussion. Feel free to create a pull request even if you are new to the process. If you need more information, see [this article](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) about how creating a pull request.
 
 ## Code of Conduct
 
