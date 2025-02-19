@@ -171,6 +171,10 @@
         "imageRef": {
           "type": "string",
           "description": "ImageRef is used to specify an image by its digest.\n+optional\n+kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "ImageUrl is used to specify an image by its URL with or without a tag.\n+optional\n+kubebuilder:validation:Pattern=`^(?:https:\\/\\/)?[a-z0-9.-]+\\/[a-z0-9-]+\\/[a-z0-9-]+(?::[a-zA-Z0-9._-]+)?$`"
         }
       },
       "additionalProperties": false,
