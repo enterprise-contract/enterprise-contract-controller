@@ -104,6 +104,11 @@ type VolatileCriteria struct {
 	// +optional
 	// +kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`
 	ImageRef string `json:"imageRef,omitempty"`
+
+	// ImageUrl is used to specify an image by its URL with or without a tag.
+	// +optional
+	// +kubebuilder:validation:Pattern=`^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+(?::[a-zA-Z0-9._-]+)?$`
+	ImageUrl string `json:"imageUrl,omitempty"`
 }
 
 // VolatileSourceConfig specifies volatile configuration for a policy source.
