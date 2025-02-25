@@ -170,7 +170,11 @@
         },
         "imageRef": {
           "type": "string",
-          "description": "ImageRef is used to specify an image by its digest.\n+optional\n+kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`"
+          "description": "DEPRECATED: Use ImageDigest instead\nImageRef is used to specify an image by its digest.\n+optional\n+kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`"
+        },
+        "imageDigest": {
+          "type": "string",
+          "description": "ImageDigest is used to specify an image by its digest.\n+optional\n+kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`"
         },
         "imageUrl": {
           "type": "string",

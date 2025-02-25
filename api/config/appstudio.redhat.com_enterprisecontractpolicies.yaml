@@ -165,8 +165,14 @@ spec:
                                 effectiveUntil:
                                   format: date-time
                                   type: string
+                                imageDigest:
+                                  description: ImageDigest is used to specify an image by its digest.
+                                  pattern: ^sha256:[a-fA-F0-9]{64}$
+                                  type: string
                                 imageRef:
-                                  description: ImageRef is used to specify an image by its digest.
+                                  description: |-
+                                    DEPRECATED: Use ImageDigest instead
+                                    ImageRef is used to specify an image by its digest.
                                   pattern: ^sha256:[a-fA-F0-9]{64}$
                                   type: string
                                 imageUrl:
@@ -192,8 +198,14 @@ spec:
                                 effectiveUntil:
                                   format: date-time
                                   type: string
+                                imageDigest:
+                                  description: ImageDigest is used to specify an image by its digest.
+                                  pattern: ^sha256:[a-fA-F0-9]{64}$
+                                  type: string
                                 imageRef:
-                                  description: ImageRef is used to specify an image by its digest.
+                                  description: |-
+                                    DEPRECATED: Use ImageDigest instead
+                                    ImageRef is used to specify an image by its digest.
                                   pattern: ^sha256:[a-fA-F0-9]{64}$
                                   type: string
                                 imageUrl:
