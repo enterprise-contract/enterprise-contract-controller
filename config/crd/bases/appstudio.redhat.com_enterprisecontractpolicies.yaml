@@ -176,8 +176,8 @@ spec:
                                   pattern: ^sha256:[a-fA-F0-9]{64}$
                                   type: string
                                 imageUrl:
-                                  description: ImageUrl is used to specify an image by its URL with or without a tag.
-                                  pattern: ^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+(?::[a-zA-Z0-9._-]+)?$
+                                  description: ImageUrl is used to specify an image by its URL without a tag.
+                                  pattern: ^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+$
                                   type: string
                                 value:
                                   type: string
@@ -209,8 +209,8 @@ spec:
                                   pattern: ^sha256:[a-fA-F0-9]{64}$
                                   type: string
                                 imageUrl:
-                                  description: ImageUrl is used to specify an image by its URL with or without a tag.
-                                  pattern: ^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+(?::[a-zA-Z0-9._-]+)?$
+                                  description: ImageUrl is used to specify an image by its URL without a tag.
+                                  pattern: ^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+$
                                   type: string
                                 value:
                                   type: string
