@@ -111,9 +111,9 @@ type VolatileCriteria struct {
 	// +kubebuilder:validation:Pattern=`^sha256:[a-fA-F0-9]{64}$`
 	ImageDigest string `json:"imageDigest,omitempty"`
 
-	// ImageUrl is used to specify an image by its URL with or without a tag.
+	// ImageUrl is used to specify an image by its URL without a tag.
 	// +optional
-	// +kubebuilder:validation:Pattern=`^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+(?::[a-zA-Z0-9._-]+)?$`
+	// +kubebuilder:validation:Pattern=`^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+$`
 	ImageUrl string `json:"imageUrl,omitempty"`
 }
 
