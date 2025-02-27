@@ -178,7 +178,7 @@
         },
         "imageUrl": {
           "type": "string",
-          "description": "ImageUrl is used to specify an image by its URL without a tag.\n+optional\n+kubebuilder:validation:Pattern=`^(?:https:\\/\\/)?[a-z0-9.-]+\\/[a-z0-9-]+\\/[a-z0-9-]+$`"
+          "description": "ImageUrl is used to specify an image by its URL without a tag.\n+optional\n+kubebuilder:validation:Pattern=`^[a-z0-9.-]+\\/[a-z0-9-]+\\/[a-z0-9-]+$`"
         }
       },
       "additionalProperties": false,
