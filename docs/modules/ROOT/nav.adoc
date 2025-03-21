@@ -1,2 +1,2 @@
-* xref:index.adoc[About Enterprise Contract Configuration]
+* xref:index.adoc[About Conforma Configuration]
 * xref:reference.adoc[Reference]

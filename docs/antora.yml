@@ -16,7 +16,7 @@
 
 ---
 name: ecc
-title: Enterprise Contract Configuration
+title: Conforma Configuration
 version: ~
 nav:
   - modules/ROOT/nav.adoc
