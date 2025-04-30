@@ -110,6 +110,7 @@ docker-push: ## Push docker image with the manager.
 
 .PHONY: export-schema
 export-schema: generate ## Export the CRD schema to the schema directory as a json-store.org schema.
+	@mkdir -p dist
 	cp api/v1alpha1/policy_spec.json dist/
 
 ##@ Deployment
