@@ -15,7 +15,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ---
-name: Publish schema to website
+name: Publish schema to pages
 
 "on":
   workflow_dispatch:
