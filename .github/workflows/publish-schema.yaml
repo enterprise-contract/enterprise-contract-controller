@@ -76,7 +76,7 @@ jobs:
           name: dist
           path: "schema"
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v.3.0.1
+        uses: actions/upload-pages-artifact@2d163be3ddce01512f3eea7ac5b7023b5d643ce1 # v.3.0.1
         with:
           path: "."
       - name: Deploy to GitHub Pages
