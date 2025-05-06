@@ -201,7 +201,10 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 | *`value`* __string__ | 
 | *`effectiveOn`* __string__ | 
 | *`effectiveUntil`* __string__ | 
-| *`imageRef`* __string__ | ImageRef is used to specify an image by its digest. +
+| *`imageRef`* __string__ | DEPRECATED: Use ImageDigest instead +
+ImageRef is used to specify an image by its digest. +
+| *`imageDigest`* __string__ | ImageDigest is used to specify an image by its digest. +
+| *`imageUrl`* __string__ | ImageUrl is used to specify an image by its URL without a tag. +
 |===
 
 
