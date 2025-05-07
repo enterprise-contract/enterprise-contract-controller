@@ -113,7 +113,7 @@ type VolatileCriteria struct {
 
 	// ImageUrl is used to specify an image by its URL without a tag.
 	// +optional
-	// +kubebuilder:validation:Pattern=`^(?:https:\/\/)?[a-z0-9.-]+\/[a-z0-9-]+\/[a-z0-9-]+$`
+	// +kubebuilder:validation:Pattern=`^[a-z0-9][a-z0-9.-]*[a-z0-9](?:\/[a-z0-9][a-z0-9-]*[a-z0-9]){2,}$`
 	ImageUrl string `json:"imageUrl,omitempty"`
 }
 

@@ -149,3 +149,135 @@ func TestMultiplevolatileConfigWithSameValue(t *testing.T) {
 		t.Errorf("did not expect validation errors: %v", errs)
 	}
 }
+
+func TestImageUrlPattern(t *testing.T) {
+	tests := []struct {
+		name      string
+		url       string
+		wantValid bool
+		omitField bool // true if the field should be omitted entirely
+	}{
+		// Valid cases
+		{"Simple registry path", "quay.io/org/repo1", true, false},
+		{"Multi-level org path", "registry.io/org1/org2/repo1", true, false},
+		{"Docker library path", "docker.io/library/nginx", true, false},
+		{"GitHub container registry", "ghcr.io/org/project/repo", true, false},
+		{"Registry with subdomain", "my-registry.com/org/suborg/repo", true, false},
+		{"Registry with multiple subdomains", "prod.registry.example.com/org/repo", true, false},
+		{"Registry with hyphens", "my-registry.example.com/org-name/repo-name", true, false},
+		{"Registry with numbers", "registry123.example.com/org123/repo123", true, false},
+		{"Extra path component", "registry/org/repo/extra", true, false},
+		{"Omitted field", "", true, true}, // Field is omitted entirely
+
+		// Invalid cases
+		{"URL with HTTPS", "https://quay.io/org/repo", false, false},
+		{"Localhost with port", "localhost:5000/org/repo", false, false},
+		{"Invalid character @", "invalid@registry/org/repo", false, false},
+		{"Missing repo", "registry/org", false, false},
+		{"Double slash", "registry//org/repo", false, false},
+		{"Trailing slash", "registry/org/repo/", false, false},
+		{"With tag", "registry/org/repo:tag", false, false},
+		{"With digest", "registry/org/repo@sha256:abc123", false, false},
+		{"Missing repo with slash", "registry/org/", false, false},
+		{"Only registry with slash", "registry/", false, false},
+		{"Only registry", "registry", false, false},
+		{"Extra path with slash", "registry/org/repo/extra/", false, false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Create a policy with the test URL
+			policy := EnterpriseContractPolicy{
+				Spec: EnterpriseContractPolicySpec{
+					Sources: []Source{
+						{
+							VolatileConfig: &VolatileSourceConfig{
+								Exclude: []VolatileCriteria{
+									{
+										Value: "test-rule",
+									},
+								},
+							},
+						},
+					},
+				},
+			}
+			if !tt.omitField {
+				policy.Spec.Sources[0].VolatileConfig.Exclude[0].ImageUrl = tt.url
+			}
+
+			// Create a CRD validation schema
+			crd := v1.CustomResourceDefinition{}
+			bytes, err := os.ReadFile("../../config/crd/bases/appstudio.redhat.com_enterprisecontractpolicies.yaml")
+			if err != nil {
+				t.Fatalf("unexpected error reading CRD: %s", err)
+			}
+			if err := yaml.Unmarshal(bytes, &crd); err != nil {
+				t.Fatalf("unexpected error when decoding schema: %s", err)
+			}
+
+			crdv := apiextensions.CustomResourceValidation{}
+			if err := v1.Convert_v1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crd.Spec.Versions[0].Schema, &crdv, nil); err != nil {
+				t.Fatalf("failed in CRD validation conversion: %s", err)
+			}
+
+			s, err := schema.NewStructural(crdv.OpenAPIV3Schema)
+			if err != nil {
+				t.Fatalf("unexpected error when creating structural: %s", err)
+			}
+
+			v := validation.NewSchemaValidatorFromOpenAPI(s.ToKubeOpenAPI())
+
+			// Convert policy to unstructured for validation
+			obj := unstructured.Unstructured{}
+			obj.SetUnstructuredContent(map[string]interface{}{
+				"apiVersion": "appstudio.redhat.com/v1alpha1",
+				"kind":       "EnterpriseContractPolicy",
+				"spec": map[string]interface{}{
+					"sources": []interface{}{
+						map[string]interface{}{
+							"volatileConfig": map[string]interface{}{
+								"exclude": []interface{}{
+									func() map[string]interface{} {
+										m := map[string]interface{}{
+											"value": "test-rule",
+										}
+										if !tt.omitField {
+											m["imageUrl"] = tt.url
+										}
+										return m
+									}(),
+								},
+							},
+						},
+					},
+				},
+			})
+
+			// Validate the object
+			result := v.Validate(&obj)
+			isValid := result.IsValid()
+
+			if isValid != tt.wantValid {
+				t.Errorf("Validation for %q = %v, want %v. Errors: %v", tt.url, isValid, tt.wantValid, result.Errors)
+			}
+
+			// Also validate the actual policy object
+			policyObj := unstructured.Unstructured{}
+			policyBytes, err := json.Marshal(policy)
+			if err != nil {
+				t.Fatalf("unexpected error marshaling policy: %s", err)
+			}
+			if err := json.Unmarshal(policyBytes, &policyObj.Object); err != nil {
+				t.Fatalf("unexpected error unmarshaling policy: %s", err)
+			}
+
+			policyResult := v.Validate(&policyObj)
+			policyIsValid := policyResult.IsValid()
+
+			if policyIsValid != tt.wantValid {
+				t.Errorf("Policy validation for %q = %v, want %v. Errors: %v", tt.url, policyIsValid, tt.wantValid, policyResult.Errors)
+			}
+		})
+	}
+}
