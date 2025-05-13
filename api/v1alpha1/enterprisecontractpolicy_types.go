@@ -115,6 +115,10 @@ type VolatileCriteria struct {
 	// +optional
 	// +kubebuilder:validation:Pattern=`^[a-z0-9][a-z0-9.-]*[a-z0-9](?:\/[a-z0-9][a-z0-9-]*[a-z0-9]){2,}$`
 	ImageUrl string `json:"imageUrl,omitempty"`
+
+	// Reference is used to include a link to related information such as a Jira issue URL.
+	// +optional
+	Reference string `json:"reference,omitempty"`
 }
 
 // VolatileSourceConfig specifies volatile configuration for a policy source.
