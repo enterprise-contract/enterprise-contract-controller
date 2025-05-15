@@ -72,3 +72,24 @@ jobs:
             done
             exit 1
           fi
+
+  Check-Uncommitted-Make-All:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Run "make all"
+        run: make all
+
+      - name: Check for uncommitted changes
+        run: |
+          if ! git diff --exit-code -s; then
+            for f in $(git diff --exit-code --name-only); do
+              echo "::error file=$f,line=1,col=1,endColumn=1::File was modified in build"
+            done
+            exit 1
+          fi
+
