@@ -281,3 +281,118 @@ func TestImageUrlPattern(t *testing.T) {
 		})
 	}
 }
+
+
+func TestReferenceField(t *testing.T) {
+	tests := []struct {
+		name      string
+		reference string
+		wantValid bool
+		omitField bool // true if the field should be omitted entirely
+	}{
+		// Valid cases
+		{"URL", "https://issues.redhat.com/browse/EC-1246", true, false},
+		{"Multiline URL", "https://issues.redhat.com/browse/EC-1246\nhttps://issues.redhat.com/browse/EC-1101", true, false},
+		{"With whitespaces", "string with whitespaces", true, false},
+        {"Long String", strings.Repeat("A", 1000), true, false},
+		{"Empty String", "", true, false},
+		{"Omitted field", "", true, true}, // Field is omitted entirely
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Create a policy with the test URL
+			policy := EnterpriseContractPolicy{
+				Spec: EnterpriseContractPolicySpec{
+					Sources: []Source{
+						{
+							VolatileConfig: &VolatileSourceConfig{
+								Exclude: []VolatileCriteria{
+									{
+										Value: "test-rule",
+									},
+								},
+							},
+						},
+					},
+				},
+			}
+			if !tt.omitField {
+				policy.Spec.Sources[0].VolatileConfig.Exclude[0].Reference = tt.reference
+			}
+
+			// Create a CRD validation schema
+			crd := v1.CustomResourceDefinition{}
+			bytes, err := os.ReadFile("../../config/crd/bases/appstudio.redhat.com_enterprisecontractpolicies.yaml")
+			if err != nil {
+				t.Fatalf("unexpected error reading CRD: %s", err)
+			}
+			if err := yaml.Unmarshal(bytes, &crd); err != nil {
+				t.Fatalf("unexpected error when decoding schema: %s", err)
+			}
+
+			crdv := apiextensions.CustomResourceValidation{}
+			if err := v1.Convert_v1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crd.Spec.Versions[0].Schema, &crdv, nil); err != nil {
+				t.Fatalf("failed in CRD validation conversion: %s", err)
+			}
+
+			s, err := schema.NewStructural(crdv.OpenAPIV3Schema)
+			if err != nil {
+				t.Fatalf("unexpected error when creating structural: %s", err)
+			}
+
+			v := validation.NewSchemaValidatorFromOpenAPI(s.ToKubeOpenAPI())
+
+			// Convert policy to unstructured for validation
+			obj := unstructured.Unstructured{}
+			obj.SetUnstructuredContent(map[string]interface{}{
+				"apiVersion": "appstudio.redhat.com/v1alpha1",
+				"kind":       "EnterpriseContractPolicy",
+				"spec": map[string]interface{}{
+					"sources": []interface{}{
+						map[string]interface{}{
+							"volatileConfig": map[string]interface{}{
+								"exclude": []interface{}{
+									func() map[string]interface{} {
+										m := map[string]interface{}{
+											"value": "test-rule",
+										}
+										if !tt.omitField {
+											m["reference"] = tt.reference
+										}
+										return m
+									}(),
+								},
+							},
+						},
+					},
+				},
+			})
+
+			// Validate the object
+			result := v.Validate(&obj)
+			isValid := result.IsValid()
+
+			if isValid != tt.wantValid {
+				t.Errorf("Validation for %q = %v, want %v. Errors: %v", tt.reference, isValid, tt.wantValid, result.Errors)
+			}
+
+			// Also validate the actual policy object
+			policyObj := unstructured.Unstructured{}
+			policyBytes, err := json.Marshal(policy)
+			if err != nil {
+				t.Fatalf("unexpected error marshaling policy: %s", err)
+			}
+			if err := json.Unmarshal(policyBytes, &policyObj.Object); err != nil {
+				t.Fatalf("unexpected error unmarshaling policy: %s", err)
+			}
+
+			policyResult := v.Validate(&policyObj)
+			policyIsValid := policyResult.IsValid()
+
+			if policyIsValid != tt.wantValid {
+				t.Errorf("Policy validation for %q = %v, want %v. Errors: %v", tt.reference, policyIsValid, tt.wantValid, policyResult.Errors)
+			}
+		})
+	}
+}
