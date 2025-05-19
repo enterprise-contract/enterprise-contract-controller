@@ -18,8 +18,11 @@ package controllers
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	tektonv1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"knative.dev/pkg/apis"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -121,9 +124,52 @@ func isVSAComplete(pr *tektonv1.PipelineRun) bool {
 	return false
 }
 
-// triggerConforma triggers the Conforma validation (stubbed for now)
 func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv1.PipelineRun) error {
-	// TODO: Implement actual Conforma trigger logic
+	log := log.FromContext(ctx)
+
+	// These values should come from the PipelineRun or a config map / policy
+	sourceData := pr.Annotations["conforma/source-data"]
+	snapshotFile := pr.Annotations["conforma/snapshot-filename"]
+	if sourceData == "" || snapshotFile == "" {
+		return fmt.Errorf("missing required annotations: conforma/source-data or conforma/snapshot-filename")
+	}
+
+	taskRun := &tektonv1.TaskRun{
+		ObjectMeta: v1.ObjectMeta{
+			GenerateName: "conforma-verify-",
+			Namespace:    pr.Namespace,
+			Labels: map[string]string{
+				"app.kubernetes.io/created-by":               "enterprise-contract-controller",
+				"enterprise-contract.redhat.com/pipelinerun": pr.Name,
+			},
+		},
+		Spec: tektonv1.TaskRunSpec{
+			TaskRef: &tektonv1.TaskRef{
+				ResolverRef: tektonv1.ResolverRef{
+					Resolver: "git",
+					Params: []tektonv1.Param{
+						{Name: "url", Value: tektonv1.ParamValue{StringVal: "https://github.com/enterprise-contract/ec-cli", Type: tektonv1.ParamTypeString}},
+						{Name: "revision", Value: tektonv1.ParamValue{StringVal: "main", Type: tektonv1.ParamTypeString}},
+						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: "tasks/verify-conforma-konflux-ta.yaml", Type: tektonv1.ParamTypeString}},
+					},
+				},
+			},
+			Params: []tektonv1.Param{
+				{Name: "SOURCE_DATA_ARTIFACT", Value: *tektonv1.NewStructuredValues(sourceData)},
+				{Name: "SNAPSHOT_FILENAME", Value: *tektonv1.NewStructuredValues(snapshotFile)},
+				// Add additional params as needed, possibly pulled from PipelineRun annotations or ConfigMap
+				{Name: "POLICY_CONFIGURATION", Value: *tektonv1.NewStructuredValues("enterprise-contract-service/default")},
+			},
+			Timeout: &v1.Duration{Duration: 10 * time.Minute},
+		},
+	}
+
+	if err := r.Client.Create(ctx, taskRun); err != nil {
+		log.Error(err, "Failed to create Conforma TaskRun")
+		return err
+	}
+
+	log.Info("Conforma TaskRun created", "name", taskRun.Name)
 	return nil
 }
 
