@@ -4,6 +4,9 @@ metadata:
   name: enterprise-contract-controller
   namespace: enterprise-contract
 spec:
+  selector:
+    matchLabels:
+      app: enterprise-contract-controller
   template:
     spec:
       containers:
