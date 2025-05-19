@@ -129,11 +129,12 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 
 // markVSAComplete marks the PipelineRun as having completed VSA generation
 func (r *PipelineRunReconciler) markVSAComplete(ctx context.Context, pr *tektonv1.PipelineRun) error {
+	patch := client.MergeFrom(pr.DeepCopy())
 	if pr.Annotations == nil {
 		pr.Annotations = make(map[string]string)
 	}
 	pr.Annotations[AnnotationVSAComplete] = "true"
-	return r.Update(ctx, pr)
+	return r.Patch(ctx, pr, patch)
 }
 
 // SetupWithManager sets up the controller with the Manager
