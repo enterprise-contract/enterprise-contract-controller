@@ -5,7 +5,6 @@ resources:
 - bases/appstudio.redhat.com_enterprisecontractpolicies.yaml
 - enterprisecontractpolicy_editor_role.yaml
 - enterprisecontractpolicy_viewer_role.yaml
-- openshift_console_example.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patchesStrategicMerge:

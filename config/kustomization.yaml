@@ -10,5 +10,4 @@ resources:
   - manager
   - prometheus
   - rbac
-  - samples
   

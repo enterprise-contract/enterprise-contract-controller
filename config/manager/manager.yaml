@@ -8,7 +8,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: controller
+  name: enterprise-contract-controller
   namespace: enterprise-contract
   labels:
     name: enterprise-contract-controller
@@ -25,12 +25,8 @@ spec:
       securityContext:
         runAsNonRoot: true
       containers:
-      - command:
-        - /manager
-        args:
-        - --leader-elect
+      - name: enterprise-contract-controller
         image: ko://github.com/enterprise-contract/enterprise-contract-controller
-        name: enterprise-contract-controller
         securityContext:
           allowPrivilegeEscalation: false
         livenessProbe:
@@ -45,8 +41,6 @@ spec:
             port: 8081
           initialDelaySeconds: 5
           periodSeconds: 10
-        # TODO(user): Configure the resources accordingly based on the project requirements.
-        # More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
         resources:
           limits:
             cpu: 500m
@@ -54,5 +48,6 @@ spec:
           requests:
             cpu: 10m
             memory: 64Mi
+
       serviceAccountName: enterprise-contract-controller
       terminationGracePeriodSeconds: 10
