@@ -29,7 +29,7 @@ spec:
         - /manager
         args:
         - --leader-elect
-        image: quay.io/hacbs-contract/enterprise-contract-controller:latest
+        image: ko://github.com/enterprise-contract/enterprise-contract-controller
         name: enterprise-contract-controller
         securityContext:
           allowPrivilegeEscalation: false

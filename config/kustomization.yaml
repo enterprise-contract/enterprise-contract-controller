@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - crd/bases/appstudio.redhat.com_enterprisecontractpolicies.yaml
+  - crd/enterprisecontractpolicy_editor_role.yaml
+  - crd/enterprisecontractpolicy_viewer_role.yaml
+  - crd/openshift_console_example.yaml
+  - default
+  - manager
+  - prometheus
+  - rbac
+  - samples
+  
