@@ -1,12 +1,13 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: enterprise-contract-controller
+  name: controller
   namespace: enterprise-contract
 spec:
   selector:
     matchLabels:
-      app: enterprise-contract-controller
+      name: enterprise-contract-controller
   template:
     spec:
       containers:
@@ -28,4 +29,3 @@ spec:
             requests:
               cpu: 5m
               memory: 64Mi
-

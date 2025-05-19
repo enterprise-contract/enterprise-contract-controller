@@ -18,7 +18,6 @@ package controllers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	tektonv1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
@@ -129,9 +128,12 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 
 	// These values should come from the PipelineRun or a config map / policy
 	sourceData := pr.Annotations["conforma/source-data"]
+	if sourceData == "" {
+		sourceData = "default-source-data"
+	}
 	snapshotFile := pr.Annotations["conforma/snapshot-filename"]
-	if sourceData == "" || snapshotFile == "" {
-		return fmt.Errorf("missing required annotations: conforma/source-data or conforma/snapshot-filename")
+	if snapshotFile == "" {
+		snapshotFile = "default-snapshot.json"
 	}
 
 	taskRun := &tektonv1.TaskRun{

@@ -8,7 +8,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: enterprise-contract-controller
+  name: controller
   namespace: enterprise-contract
   labels:
     name: enterprise-contract-controller
