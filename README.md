@@ -9,7 +9,7 @@ Currently contains `EnterpriseContractConfiguration` Kubernetes custom resource.
 > Enterprise Contract is now called Conforma. However, because changing the CRD and controller name would have a large impact, we're not going to rename them at this stage.
 
 ## Getting Started
-You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
+You'll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
 **Note:** Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster `kubectl cluster-info` shows).
 
 ### Running on the cluster
@@ -29,6 +29,23 @@ make docker-build docker-push IMG=<some-registry>/enterprise-contract-controller
 
 ```sh
 make deploy IMG=<some-registry>/enterprise-contract-controller:tag
+```
+
+### Local Development
+For local development and testing, you can use ko for faster iteration:
+
+```sh
+# Set your container registry
+export KO_DOCKER_REPO=<your-container-registry>
+
+# Deploy using ko and kustomize
+kustomize build config/default | ko apply -f -
+```
+
+To run the test suite:
+
+```sh
+make test
 ```
 
 ### Uninstall CRDs
