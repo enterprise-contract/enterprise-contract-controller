@@ -4,45 +4,56 @@ kind: ClusterRole
 metadata:
   name: enterprise-contract-role
 rules:
-- apiGroups:
-  - appstudio.redhat.com
-  resources:
-  - enterprisecontractpolicies
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - appstudio.redhat.com
-  resources:
-  - enterprisecontractpolicies/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - appstudio.redhat.com
-  resources:
-  - enterprisecontractpolicies/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - tekton.dev
-  resources:
-  - pipelineruns
-  verbs:
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - tekton.dev
-  resources:
-  - pipelineruns/status
-  verbs:
-  - get
+  - apiGroups:
+      - appstudio.redhat.com
+    resources:
+      - enterprisecontractpolicies
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - appstudio.redhat.com
+    resources:
+      - enterprisecontractpolicies/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - appstudio.redhat.com
+    resources:
+      - enterprisecontractpolicies/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - pipelineruns
+    verbs:
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - pipelineruns/status
+    verbs:
+      - get
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - taskruns
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - patch

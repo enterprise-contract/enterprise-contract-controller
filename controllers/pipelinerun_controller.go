@@ -19,6 +19,7 @@ package controllers
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	tektonv1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
@@ -124,6 +125,17 @@ func isVSAComplete(pr *tektonv1.PipelineRun) bool {
 	return false
 }
 
+// getControllerNamespace returns the namespace where the controller is running
+func getControllerNamespace() string {
+	// Read namespace from the downward API file
+	nsBytes, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+	if err != nil {
+		// Fallback to default if we can't read the file
+		return "default"
+	}
+	return string(nsBytes)
+}
+
 func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv1.PipelineRun) error {
 	log := log.FromContext(ctx)
 
@@ -158,7 +170,7 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 	taskRun := &tektonv1.TaskRun{
 		ObjectMeta: v1.ObjectMeta{
 			GenerateName: "conforma-verify-",
-			Namespace:    pr.Namespace,
+			Namespace:    getControllerNamespace(),
 			Labels: map[string]string{
 				"app.kubernetes.io/created-by":               "enterprise-contract-controller",
 				"enterprise-contract.redhat.com/pipelinerun": pr.Name,
@@ -171,7 +183,7 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 					Params: []tektonv1.Param{
 						{Name: "url", Value: tektonv1.ParamValue{StringVal: "https://github.com/enterprise-contract/ec-cli", Type: tektonv1.ParamTypeString}},
 						{Name: "revision", Value: tektonv1.ParamValue{StringVal: "main", Type: tektonv1.ParamTypeString}},
-						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: "tasks/verify-conforma-konflux-ta.yaml", Type: tektonv1.ParamTypeString}},
+						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: "tasks/verify-conforma-konflux-ta/verify-conforma-konflux-ta.yaml", Type: tektonv1.ParamTypeString}},
 					},
 				},
 			},
