@@ -48,6 +48,5 @@ spec:
           requests:
             cpu: 10m
             memory: 64Mi
-
       serviceAccountName: enterprise-contract-controller
       terminationGracePeriodSeconds: 10

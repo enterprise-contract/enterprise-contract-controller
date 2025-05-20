@@ -31,6 +31,30 @@ make docker-build docker-push IMG=<some-registry>/enterprise-contract-controller
 make deploy IMG=<some-registry>/enterprise-contract-controller:tag
 ```
 
+### Deployment Options
+
+There are two ways to deploy the controller:
+
+1. **Default Deployment**: Deploys the EnterpriseContract CRD and enables the basic reconciler for EnterpriseContract resources.
+
+```sh
+# Set your container registry
+export KO_DOCKER_REPO=<your-container-registry>
+
+# Deploy using ko and kustomize
+kustomize build config/default | ko apply -f -
+```
+
+2. **PipelineRun Reconciler Deployment**: In addition to the default deployment, this enables a PipelineRun reconciler that triggers Conforma to verify PipelineRun attestations.
+
+```sh
+# Set your container registry
+export KO_DOCKER_REPO=<your-container-registry>
+
+# Deploy using ko and kustomize with PipelineRun reconciler
+kustomize build config/overlays/pipelinerun/ | ko apply -f -
+```
+
 ### Local Development
 For local development and testing, you can use ko for faster iteration:
 
