@@ -278,7 +278,7 @@ var _ = Describe("PipelineRun Controller", func() {
 						Results: []tektonv1.PipelineRunResult{
 							{
 								Name:  "IMAGE_URL",
-								Value: *tektonv1.NewStructuredValues("quay.io/test/image"),
+								Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
 							},
 							{
 								Name:  "IMAGE_DIGEST",
@@ -303,26 +303,111 @@ var _ = Describe("PipelineRun Controller", func() {
 			Expect(taskRunList.Items).To(HaveLen(1))
 
 			taskRun := taskRunList.Items[0]
-			Expect(taskRun.Labels).To(HaveKeyWithValue("app.kubernetes.io/created-by", "enterprise-contract-controller"))
-			Expect(taskRun.Labels).To(HaveKeyWithValue("enterprise-contract.redhat.com/pipelinerun", PipelineRunName+"-conforma"))
-
-			// Verify TaskRun parameters
-			Expect(taskRun.Spec.Params).To(ContainElement(HaveField("Name", "SOURCE_DATA_ARTIFACT")))
-			Expect(taskRun.Spec.Params).To(ContainElement(HaveField("Name", "SNAPSHOT_FILENAME")))
-			Expect(taskRun.Spec.Params).To(ContainElement(HaveField("Name", "POLICY_CONFIGURATION")))
-
-			// Verify TaskRef
-			Expect(taskRun.Spec.TaskRef.ResolverRef.Resolver).To(Equal("git"))
-			Expect(taskRun.Spec.TaskRef.ResolverRef.Params).To(ContainElement(HaveField("Name", "url")))
-			Expect(taskRun.Spec.TaskRef.ResolverRef.Params).To(ContainElement(HaveField("Name", "revision")))
-			Expect(taskRun.Spec.TaskRef.ResolverRef.Params).To(ContainElement(HaveField("Name", "pathInRepo")))
+			Expect(taskRun.Labels["app.kubernetes.io/created-by"]).To(Equal("enterprise-contract-controller"))
+			Expect(taskRun.Labels["enterprise-contract.redhat.com/pipelinerun"]).To(Equal(pipelineRun.Name))
+			Expect(taskRun.Spec.TaskRef.Resolver).To(Equal("git"))
+			Expect(taskRun.Spec.TaskRef.ResolverRef.Params).To(ContainElements(
+				tektonv1.Param{
+					Name: "url",
+					Value: tektonv1.ParamValue{
+						StringVal: "https://github.com/enterprise-contract/ec-cli",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "revision",
+					Value: tektonv1.ParamValue{
+						StringVal: "main",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "pathInRepo",
+					Value: tektonv1.ParamValue{
+						StringVal: "tasks/verify-conforma-konflux-ta.yaml",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+			))
+			Expect(taskRun.Spec.Params).To(ContainElements(
+				tektonv1.Param{
+					Name: "SOURCE_DATA_ARTIFACT",
+					Value: tektonv1.ParamValue{
+						StringVal: "test-source-data",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "SNAPSHOT_FILENAME",
+					Value: tektonv1.ParamValue{
+						StringVal: `{"components":[{"containerImage":"quay.io/test/image:latest:sha256:1234567890abcdef"}]}`,
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "POLICY_CONFIGURATION",
+					Value: tektonv1.ParamValue{
+						StringVal: "enterprise-contract-service/default",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+			))
+			Expect(taskRun.Spec.Timeout.Duration).To(Equal(10 * time.Minute))
 		})
 
-		It("Should fail when IMAGE_URL is missing", func() {
+		It("Should use default source data when annotation is missing", func() {
+			By("Creating a PipelineRun without source data annotation")
+			pipelineRun := &tektonv1.PipelineRun{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      PipelineRunName + "-conforma-default",
+					Namespace: PipelineRunNamespace,
+				},
+				Status: tektonv1.PipelineRunStatus{
+					PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
+						Results: []tektonv1.PipelineRunResult{
+							{
+								Name:  "IMAGE_URL",
+								Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
+							},
+							{
+								Name:  "IMAGE_DIGEST",
+								Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
+							},
+						},
+					},
+				},
+			}
+			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
+
+			By("Triggering Conforma verification")
+			reconciler := &PipelineRunReconciler{
+				Client: k8sClient,
+				Scheme: k8sClient.Scheme(),
+			}
+			Expect(reconciler.triggerConforma(context.Background(), pipelineRun)).Should(Succeed())
+
+			By("Verifying the TaskRun was created with default source data")
+			taskRunList := &tektonv1.TaskRunList{}
+			Expect(k8sClient.List(context.Background(), taskRunList, client.InNamespace(PipelineRunNamespace))).Should(Succeed())
+			Expect(taskRunList.Items).To(HaveLen(1))
+
+			taskRun := taskRunList.Items[0]
+			Expect(taskRun.Spec.Params).To(ContainElement(
+				tektonv1.Param{
+					Name: "SOURCE_DATA_ARTIFACT",
+					Value: tektonv1.ParamValue{
+						StringVal: "default-source-data",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+			))
+		})
+
+		It("Should fail when IMAGE_URL result is missing", func() {
 			By("Creating a PipelineRun without IMAGE_URL result")
 			pipelineRun := &tektonv1.PipelineRun{
 				ObjectMeta: metav1.ObjectMeta{
-					Name:      PipelineRunName + "-missing-url",
+					Name:      PipelineRunName + "-conforma-no-url",
 					Namespace: PipelineRunNamespace,
 				},
 				Status: tektonv1.PipelineRunStatus{
@@ -348,11 +433,11 @@ var _ = Describe("PipelineRun Controller", func() {
 			Expect(err.Error()).To(ContainSubstring("IMAGE_URL result not found"))
 		})
 
-		It("Should fail when IMAGE_DIGEST is missing", func() {
+		It("Should fail when IMAGE_DIGEST result is missing", func() {
 			By("Creating a PipelineRun without IMAGE_DIGEST result")
 			pipelineRun := &tektonv1.PipelineRun{
 				ObjectMeta: metav1.ObjectMeta{
-					Name:      PipelineRunName + "-missing-digest",
+					Name:      PipelineRunName + "-conforma-no-digest",
 					Namespace: PipelineRunNamespace,
 				},
 				Status: tektonv1.PipelineRunStatus{
@@ -360,7 +445,7 @@ var _ = Describe("PipelineRun Controller", func() {
 						Results: []tektonv1.PipelineRunResult{
 							{
 								Name:  "IMAGE_URL",
-								Value: *tektonv1.NewStructuredValues("quay.io/test/image"),
+								Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
 							},
 						},
 					},
@@ -376,46 +461,6 @@ var _ = Describe("PipelineRun Controller", func() {
 			err := reconciler.triggerConforma(context.Background(), pipelineRun)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("IMAGE_DIGEST result not found"))
-		})
-
-		It("Should use default source data when not specified", func() {
-			By("Creating a PipelineRun without source data annotation")
-			pipelineRun := &tektonv1.PipelineRun{
-				ObjectMeta: metav1.ObjectMeta{
-					Name:      PipelineRunName + "-default-source",
-					Namespace: PipelineRunNamespace,
-				},
-				Status: tektonv1.PipelineRunStatus{
-					PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
-						Results: []tektonv1.PipelineRunResult{
-							{
-								Name:  "IMAGE_URL",
-								Value: *tektonv1.NewStructuredValues("quay.io/test/image"),
-							},
-							{
-								Name:  "IMAGE_DIGEST",
-								Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
-							},
-						},
-					},
-				},
-			}
-			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
-
-			By("Triggering Conforma verification")
-			reconciler := &PipelineRunReconciler{
-				Client: k8sClient,
-				Scheme: k8sClient.Scheme(),
-			}
-			Expect(reconciler.triggerConforma(context.Background(), pipelineRun)).Should(Succeed())
-
-			By("Verifying the TaskRun was created with default source data")
-			taskRunList := &tektonv1.TaskRunList{}
-			Expect(k8sClient.List(context.Background(), taskRunList, client.InNamespace(PipelineRunNamespace))).Should(Succeed())
-			Expect(taskRunList.Items).To(HaveLen(1))
-
-			taskRun := taskRunList.Items[0]
-			Expect(taskRun.Spec.Params).To(ContainElement(HaveField("Value.StringVal", "default-source-data")))
 		})
 	})
 })

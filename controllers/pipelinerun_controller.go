@@ -19,7 +19,6 @@ package controllers
 import (
 	"context"
 	"fmt"
-	"strings"
 	"time"
 
 	tektonv1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
@@ -153,13 +152,8 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 		return fmt.Errorf("IMAGE_DIGEST result not found in PipelineRun %s", pr.Name)
 	}
 
-	var imageRef string
-	// Extract image name from URL and combine with digest
-	imageName := imageURL
-	if lastSlash := strings.LastIndex(imageURL, "/"); lastSlash != -1 {
-		imageName = imageURL[lastSlash+1:]
-	}
-	imageRef = fmt.Sprintf("%s-%s.json", imageName, imageDigest)
+	// Create JSON string for SNAPSHOT_FILENAME
+	snapshotJSON := fmt.Sprintf(`{"components":[{"containerImage":"%s:%s"}]}`, imageURL, imageDigest)
 
 	taskRun := &tektonv1.TaskRun{
 		ObjectMeta: v1.ObjectMeta{
@@ -183,7 +177,7 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 			},
 			Params: []tektonv1.Param{
 				{Name: "SOURCE_DATA_ARTIFACT", Value: *tektonv1.NewStructuredValues(sourceData)},
-				{Name: "SNAPSHOT_FILENAME", Value: *tektonv1.NewStructuredValues(imageRef)},
+				{Name: "SNAPSHOT_FILENAME", Value: *tektonv1.NewStructuredValues(snapshotJSON)},
 				// Add additional params as needed, possibly pulled from PipelineRun annotations or ConfigMap
 				{Name: "POLICY_CONFIGURATION", Value: *tektonv1.NewStructuredValues("enterprise-contract-service/default")},
 			},
