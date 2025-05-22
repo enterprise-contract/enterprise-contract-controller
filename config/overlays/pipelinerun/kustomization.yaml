@@ -1,9 +1,0 @@
----
-resources:
-  - ../../default
-
-patches:
-  - path: enable-reconciler-patch.yaml
-    target:
-      kind: Deployment
-      name: enterprise-contract-controller
