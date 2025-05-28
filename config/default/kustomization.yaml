@@ -43,10 +43,19 @@ patchesStrategicMerge:
   #    kind: Service
   #    version: v1
   #    name: enterprise-contract-webhook-service
-  #  fieldref:
-  #    fieldpath: metadata.namespace
   #- name: SERVICE_NAME
   #  objref:
   #    kind: Service
   #    version: v1
   #    name: enterprise-contract-webhook-service
+
+configMapGenerator:
+  - name: conforma-params
+    options:
+      disableNameSuffixHash: true
+    literals:
+      - IGNORE_REKOR=true
+      - TIMEOUT=60m
+      - WORKERS=1
+      - POLICY_CONFIGURATION=github.com/enterprise-contract/config//slsa3
+      - PUBLIC_KEY=k8s://enterprise-contract/public-key

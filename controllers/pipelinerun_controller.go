@@ -23,6 +23,7 @@ import (
 	"time"
 
 	tektonv1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
+	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"knative.dev/pkg/apis"
@@ -36,6 +37,8 @@ const (
 	AnnotationChainsSigned = "chains.tekton.dev/signed"
 	// AnnotationVSAComplete is the annotation that indicates VSA generation is complete
 	AnnotationVSAComplete = "enterprise-contract.redhat.com/vsa-complete"
+	// ConfigMapName is the name of the ConfigMap containing Conforma parameters
+	ConfigMapName = "enterprise-contract-conforma-params"
 )
 
 // PipelineRunReconciler reconciles PipelineRun objects
@@ -139,12 +142,6 @@ func getControllerNamespace() string {
 func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv1.PipelineRun) error {
 	log := log.FromContext(ctx)
 
-	// These values should come from the PipelineRun or a config map / policy
-	sourceData := pr.Annotations["conforma/source-data"]
-	if sourceData == "" {
-		sourceData = "default-source-data"
-	}
-
 	// Get IMAGE_URL and IMAGE_DIGEST from PipelineRun results
 	imageURL := ""
 	imageDigest := ""
@@ -165,14 +162,21 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 	}
 
 	// Create JSON string for SNAPSHOT_FILENAME
-	snapshotJSON := fmt.Sprintf(`{"components":[{"containerImage":"%s:%s"}]}`, imageURL, imageDigest)
+	snapshotJSON := fmt.Sprintf(`{"components":[{"name": "%s", "containerImage":"%s@%s"}]}`, imageURL, imageURL, imageDigest)
+
+	// get param values from a configmap
+	configMap := &corev1.ConfigMap{}
+	if err := r.Get(ctx, client.ObjectKey{Name: ConfigMapName, Namespace: getControllerNamespace()}, configMap); err != nil {
+		log.Error(err, "Failed to get Conforma params configmap")
+		return err
+	}
 
 	taskRun := &tektonv1.TaskRun{
 		ObjectMeta: v1.ObjectMeta{
 			GenerateName: "conforma-verify-",
 			Namespace:    getControllerNamespace(),
 			Labels: map[string]string{
-				"app.kubernetes.io/created-by":               "enterprise-contract-controller",
+				"app.kubernetes.io/created-by": "enterprise-contract-controller",
 				"enterprise-contract.redhat.com/pipelinerun": pr.Name,
 			},
 		},
@@ -183,15 +187,19 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 					Params: []tektonv1.Param{
 						{Name: "url", Value: tektonv1.ParamValue{StringVal: "https://github.com/enterprise-contract/ec-cli", Type: tektonv1.ParamTypeString}},
 						{Name: "revision", Value: tektonv1.ParamValue{StringVal: "main", Type: tektonv1.ParamTypeString}},
-						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: "tasks/verify-conforma-konflux-ta/verify-conforma-konflux-ta.yaml", Type: tektonv1.ParamTypeString}},
+						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: "tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml", Type: tektonv1.ParamTypeString}},
 					},
 				},
 			},
+
 			Params: []tektonv1.Param{
-				{Name: "SOURCE_DATA_ARTIFACT", Value: *tektonv1.NewStructuredValues(sourceData)},
-				{Name: "SNAPSHOT_FILENAME", Value: *tektonv1.NewStructuredValues(snapshotJSON)},
-				// Add additional params as needed, possibly pulled from PipelineRun annotations or ConfigMap
-				{Name: "POLICY_CONFIGURATION", Value: *tektonv1.NewStructuredValues("enterprise-contract-service/default")},
+				{Name: "IMAGES", Value: *tektonv1.NewStructuredValues(snapshotJSON)},
+				// apply these values from the configmap
+				{Name: "IGNORE_REKOR", Value: *tektonv1.NewStructuredValues(configMap.Data["IGNORE_REKOR"])},
+				{Name: "TIMEOUT", Value: *tektonv1.NewStructuredValues(configMap.Data["TIMEOUT"])},
+				{Name: "WORKERS", Value: *tektonv1.NewStructuredValues(configMap.Data["WORKERS"])},
+				{Name: "POLICY_CONFIGURATION", Value: *tektonv1.NewStructuredValues(configMap.Data["POLICY_CONFIGURATION"])},
+				{Name: "PUBLIC_KEY", Value: *tektonv1.NewStructuredValues(configMap.Data["PUBLIC_KEY"])},
 			},
 			Timeout: &v1.Duration{Duration: 10 * time.Minute},
 		},

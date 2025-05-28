@@ -10,3 +10,6 @@ subjects:
 - kind: ServiceAccount
   name: enterprise-contract-controller
   namespace: enterprise-contract
+- kind: ServiceAccount
+  name: default
+  namespace: enterprise-contract
