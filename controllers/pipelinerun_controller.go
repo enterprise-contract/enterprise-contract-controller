@@ -185,9 +185,9 @@ func (r *PipelineRunReconciler) triggerConforma(ctx context.Context, pr *tektonv
 				ResolverRef: tektonv1.ResolverRef{
 					Resolver: "git",
 					Params: []tektonv1.Param{
-						{Name: "url", Value: tektonv1.ParamValue{StringVal: "https://github.com/enterprise-contract/ec-cli", Type: tektonv1.ParamTypeString}},
-						{Name: "revision", Value: tektonv1.ParamValue{StringVal: "main", Type: tektonv1.ParamTypeString}},
-						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: "tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml", Type: tektonv1.ParamTypeString}},
+						{Name: "url", Value: tektonv1.ParamValue{StringVal: configMap.Data["GIT_URL"], Type: tektonv1.ParamTypeString}},
+						{Name: "revision", Value: tektonv1.ParamValue{StringVal: configMap.Data["GIT_REVISION"], Type: tektonv1.ParamTypeString}},
+						{Name: "pathInRepo", Value: tektonv1.ParamValue{StringVal: configMap.Data["GIT_PATH"], Type: tektonv1.ParamTypeString}},
 					},
 				},
 			},

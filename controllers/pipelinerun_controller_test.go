@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -29,6 +30,7 @@ import (
 	duckv1 "knative.dev/pkg/apis/duck/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	corev1 "k8s.io/api/core/v1"
 )
 
 var _ = Describe("PipelineRun Controller", func() {
@@ -38,6 +40,32 @@ var _ = Describe("PipelineRun Controller", func() {
 		timeout              = time.Second * 10
 		interval             = time.Millisecond * 250
 	)
+
+	var configMap *corev1.ConfigMap
+
+	BeforeEach(func() {
+		configMap = &corev1.ConfigMap{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "enterprise-contract-conforma-params",
+				Namespace: PipelineRunNamespace,
+			},
+			Data: map[string]string{
+				"GIT_URL":              "https://github.com/enterprise-contract/ec-cli",
+				"GIT_REVISION":         "main",
+				"GIT_PATH":             "tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml",
+				"IGNORE_REKOR":         "true",
+				"TIMEOUT":              "60m",
+				"WORKERS":              "1",
+				"POLICY_CONFIGURATION": "github.com/enterprise-contract/config//slsa3",
+				"PUBLIC_KEY":           "k8s://enterprise-contract/public-key",
+			},
+		}
+		Expect(k8sClient.Create(context.Background(), configMap)).Should(Succeed())
+	})
+
+	AfterEach(func() {
+		Expect(k8sClient.Delete(context.Background(), configMap)).Should(Succeed())
+	})
 
 	Context("When checking PipelineRun conditions", func() {
 		It("Should detect a signed and succeeded PipelineRun", func() {
@@ -190,6 +218,18 @@ var _ = Describe("PipelineRun Controller", func() {
 						},
 					},
 				},
+				PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
+					Results: []tektonv1.PipelineRunResult{
+						{
+							Name:  "IMAGE_URL",
+							Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
+						},
+						{
+							Name:  "IMAGE_DIGEST",
+							Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
+						},
+					},
+				},
 			}
 			Expect(k8sClient.Status().Update(context.Background(), pipelineRun)).Should(Succeed())
 
@@ -273,22 +313,25 @@ var _ = Describe("PipelineRun Controller", func() {
 						"conforma/source-data": "test-source-data",
 					},
 				},
-				Status: tektonv1.PipelineRunStatus{
-					PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
-						Results: []tektonv1.PipelineRunResult{
-							{
-								Name:  "IMAGE_URL",
-								Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
-							},
-							{
-								Name:  "IMAGE_DIGEST",
-								Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
-							},
+			}
+			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
+
+			// Update the status with results
+			pipelineRun.Status = tektonv1.PipelineRunStatus{
+				PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
+					Results: []tektonv1.PipelineRunResult{
+						{
+							Name:  "IMAGE_URL",
+							Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
+						},
+						{
+							Name:  "IMAGE_DIGEST",
+							Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
 						},
 					},
 				},
 			}
-			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
+			Expect(k8sClient.Status().Update(context.Background(), pipelineRun)).Should(Succeed())
 
 			By("Triggering Conforma verification")
 			reconciler := &PipelineRunReconciler{
@@ -300,12 +343,20 @@ var _ = Describe("PipelineRun Controller", func() {
 			By("Verifying the TaskRun was created with correct parameters")
 			taskRunList := &tektonv1.TaskRunList{}
 			Expect(k8sClient.List(context.Background(), taskRunList, client.InNamespace(PipelineRunNamespace))).Should(Succeed())
-			Expect(taskRunList.Items).To(HaveLen(1))
 
-			taskRun := taskRunList.Items[0]
+			var foundTaskRun *tektonv1.TaskRun
+			for i := range taskRunList.Items {
+				tr := &taskRunList.Items[i]
+				if tr.Labels["enterprise-contract.redhat.com/pipelinerun"] == pipelineRun.Name {
+					foundTaskRun = tr
+					break
+				}
+			}
+			Expect(foundTaskRun).ToNot(BeNil(), "Expected to find a TaskRun for the PipelineRun")
+			taskRun := *foundTaskRun
 			Expect(taskRun.Labels["app.kubernetes.io/created-by"]).To(Equal("enterprise-contract-controller"))
 			Expect(taskRun.Labels["enterprise-contract.redhat.com/pipelinerun"]).To(Equal(pipelineRun.Name))
-			Expect(taskRun.Spec.TaskRef.Resolver).To(Equal("git"))
+			Expect(string(taskRun.Spec.TaskRef.Resolver)).To(Equal("git"))
 			Expect(taskRun.Spec.TaskRef.ResolverRef.Params).To(ContainElements(
 				tektonv1.Param{
 					Name: "url",
@@ -324,30 +375,51 @@ var _ = Describe("PipelineRun Controller", func() {
 				tektonv1.Param{
 					Name: "pathInRepo",
 					Value: tektonv1.ParamValue{
-						StringVal: "tasks/verify-conforma-konflux-ta.yaml",
+						StringVal: "tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml",
 						Type:      tektonv1.ParamTypeString,
 					},
 				},
 			))
 			Expect(taskRun.Spec.Params).To(ContainElements(
 				tektonv1.Param{
-					Name: "SOURCE_DATA_ARTIFACT",
+					Name: "IMAGES",
 					Value: tektonv1.ParamValue{
-						StringVal: "test-source-data",
+						StringVal: `{"components":[{"name": "quay.io/test/image:latest", "containerImage":"quay.io/test/image:latest@sha256:1234567890abcdef"}]}`,
 						Type:      tektonv1.ParamTypeString,
 					},
 				},
 				tektonv1.Param{
-					Name: "SNAPSHOT_FILENAME",
+					Name: "IGNORE_REKOR",
 					Value: tektonv1.ParamValue{
-						StringVal: `{"components":[{"containerImage":"quay.io/test/image:latest:sha256:1234567890abcdef"}]}`,
+						StringVal: "true",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "TIMEOUT",
+					Value: tektonv1.ParamValue{
+						StringVal: "60m",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "WORKERS",
+					Value: tektonv1.ParamValue{
+						StringVal: "1",
 						Type:      tektonv1.ParamTypeString,
 					},
 				},
 				tektonv1.Param{
 					Name: "POLICY_CONFIGURATION",
 					Value: tektonv1.ParamValue{
-						StringVal: "enterprise-contract-service/default",
+						StringVal: "github.com/enterprise-contract/config//slsa3",
+						Type:      tektonv1.ParamTypeString,
+					},
+				},
+				tektonv1.Param{
+					Name: "PUBLIC_KEY",
+					Value: tektonv1.ParamValue{
+						StringVal: "k8s://enterprise-contract/public-key",
 						Type:      tektonv1.ParamTypeString,
 					},
 				},
@@ -355,29 +427,32 @@ var _ = Describe("PipelineRun Controller", func() {
 			Expect(taskRun.Spec.Timeout.Duration).To(Equal(10 * time.Minute))
 		})
 
-		It("Should use default source data when annotation is missing", func() {
-			By("Creating a PipelineRun without source data annotation")
+		It("Should create TaskRun with correct parameters when PipelineRun has no annotations", func() {
+			By("Creating a PipelineRun without annotations")
 			pipelineRun := &tektonv1.PipelineRun{
 				ObjectMeta: metav1.ObjectMeta{
 					Name:      PipelineRunName + "-conforma-default",
 					Namespace: PipelineRunNamespace,
 				},
-				Status: tektonv1.PipelineRunStatus{
-					PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
-						Results: []tektonv1.PipelineRunResult{
-							{
-								Name:  "IMAGE_URL",
-								Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
-							},
-							{
-								Name:  "IMAGE_DIGEST",
-								Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
-							},
+			}
+			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
+
+			// Update the status with results
+			pipelineRun.Status = tektonv1.PipelineRunStatus{
+				PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
+					Results: []tektonv1.PipelineRunResult{
+						{
+							Name:  "IMAGE_URL",
+							Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
+						},
+						{
+							Name:  "IMAGE_DIGEST",
+							Value: *tektonv1.NewStructuredValues("sha256:1234567890abcdef"),
 						},
 					},
 				},
 			}
-			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
+			Expect(k8sClient.Status().Update(context.Background(), pipelineRun)).Should(Succeed())
 
 			By("Triggering Conforma verification")
 			reconciler := &PipelineRunReconciler{
@@ -386,17 +461,25 @@ var _ = Describe("PipelineRun Controller", func() {
 			}
 			Expect(reconciler.triggerConforma(context.Background(), pipelineRun)).Should(Succeed())
 
-			By("Verifying the TaskRun was created with default source data")
+			By("Verifying the TaskRun was created with correct parameters")
 			taskRunList := &tektonv1.TaskRunList{}
 			Expect(k8sClient.List(context.Background(), taskRunList, client.InNamespace(PipelineRunNamespace))).Should(Succeed())
-			Expect(taskRunList.Items).To(HaveLen(1))
 
-			taskRun := taskRunList.Items[0]
+			var foundTaskRun *tektonv1.TaskRun
+			for i := range taskRunList.Items {
+				tr := &taskRunList.Items[i]
+				if tr.Labels["enterprise-contract.redhat.com/pipelinerun"] == pipelineRun.Name {
+					foundTaskRun = tr
+					break
+				}
+			}
+			Expect(foundTaskRun).ToNot(BeNil(), "Expected to find a TaskRun for the PipelineRun")
+			taskRun := *foundTaskRun
 			Expect(taskRun.Spec.Params).To(ContainElement(
 				tektonv1.Param{
-					Name: "SOURCE_DATA_ARTIFACT",
+					Name: "IMAGES",
 					Value: tektonv1.ParamValue{
-						StringVal: "default-source-data",
+						StringVal: `{"components":[{"name": "quay.io/test/image:latest", "containerImage":"quay.io/test/image:latest@sha256:1234567890abcdef"}]}`,
 						Type:      tektonv1.ParamTypeString,
 					},
 				},
@@ -453,6 +536,19 @@ var _ = Describe("PipelineRun Controller", func() {
 			}
 			Expect(k8sClient.Create(context.Background(), pipelineRun)).Should(Succeed())
 
+			// Update the status with only IMAGE_URL result
+			pipelineRun.Status = tektonv1.PipelineRunStatus{
+				PipelineRunStatusFields: tektonv1.PipelineRunStatusFields{
+					Results: []tektonv1.PipelineRunResult{
+						{
+							Name:  "IMAGE_URL",
+							Value: *tektonv1.NewStructuredValues("quay.io/test/image:latest"),
+						},
+					},
+				},
+			}
+			Expect(k8sClient.Status().Update(context.Background(), pipelineRun)).Should(Succeed())
+
 			By("Triggering Conforma verification")
 			reconciler := &PipelineRunReconciler{
 				Client: k8sClient,
@@ -460,7 +556,7 @@ var _ = Describe("PipelineRun Controller", func() {
 			}
 			err := reconciler.triggerConforma(context.Background(), pipelineRun)
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("IMAGE_DIGEST result not found"))
+			Expect(err.Error()).To(Equal(fmt.Sprintf("IMAGE_DIGEST result not found in PipelineRun %s", pipelineRun.Name)))
 		})
 	})
 })

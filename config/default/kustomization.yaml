@@ -59,3 +59,6 @@ configMapGenerator:
       - WORKERS=1
       - POLICY_CONFIGURATION=github.com/enterprise-contract/config//slsa3
       - PUBLIC_KEY=k8s://enterprise-contract/public-key
+      - GIT_URL=https://github.com/enterprise-contract/ec-cli
+      - GIT_REVISION=main
+      - GIT_PATH=tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml
