@@ -19,7 +19,7 @@ COPY controllers/ controllers/
 # Build
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o manager main.go
 
-FROM registry.access.redhat.com/ubi8/ubi-micro:latest@sha256:084c06bf84ceb8ed8f868bd27e7fc6b2c83ae4e16f8e1f979dd7317961c7dd8a
+FROM registry.access.redhat.com/ubi8/ubi-micro:latest@sha256:0fe81f64dab0570da191fbc74004fff651027640496fb220661da4e9d83860f7
 WORKDIR /
 COPY --from=builder /workspace/manager .
 
