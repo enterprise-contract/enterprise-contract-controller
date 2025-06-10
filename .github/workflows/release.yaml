@@ -54,7 +54,7 @@ jobs:
           echo "version=$(./hack/next-version.sh)" >> "$GITHUB_ENV"
 
       - name: API Release
-        uses: softprops/action-gh-release@d5382d3e6f2fa7bd53cb749d33091853d4985daf # v2.3.0
+        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
         with:
           name: API Release ${{env.version}}
           tag_name: ${{env.version}}
