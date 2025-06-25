@@ -14,7 +14,7 @@ Contract by specifying the rules needed for a container image to be compliant wi
 software release policy requirements.
 
 The Enterprise Contract Policy is passed in the form of a configuration to the
-xref:ec-cli:ROOT:index.adoc[EC CLI] to
+xref:cli:ROOT:index.adoc[EC CLI] to
 parameterize its execution in the enforcement of the set policy.
 
 == How to create Enterprise Contract Policy
@@ -40,7 +40,7 @@ structure of this document.
 
 The policy in JSON format can be passed in directly to the `ec` command line
 using the `-p`/`--policy` option, for example in the
-xref:ec-cli:ROOT:ec_validate_image.adoc[`validate image`] command.
+xref:cli:ROOT:ec_validate_image.adoc[`validate image`] command.
 
 === As a Kubernetes Custom Resource
 
