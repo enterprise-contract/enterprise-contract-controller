@@ -13,40 +13,52 @@ namePrefix: enterprise-contract-
 #  someName: someValue
 
 bases:
-- ../crd
-- ../rbac
-- ../manager
-# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in
-# crd/kustomization.yaml
-#- ../webhook
-# [PROMETHEUS] To enable prometheus monitor, uncomment all sections with 'PROMETHEUS'.
-#- ../prometheus
+  - ../crd
+  - ../rbac
+  - ../manager
+  # [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in
+  # crd/kustomization.yaml
+  #- ../webhook
+  # [PROMETHEUS] To enable prometheus monitor, uncomment all sections with 'PROMETHEUS'.
+  #- ../prometheus
 
 patchesStrategicMerge:
-# Protect the /metrics endpoint by putting it behind auth.
-# If you want your controller-manager to expose the /metrics
-# endpoint w/o any authn/z, please comment the following line.
-- manager_auth_proxy_patch.yaml
+  # Protect the /metrics endpoint by putting it behind auth.
+  # If you want your controller-manager to expose the /metrics
+  # endpoint w/o any authn/z, please comment the following line.
+  - manager_auth_proxy_patch.yaml
 
-# Mount the controller config file for loading manager configurations
-# through a ComponentConfig type
-#- manager_config_patch.yaml
+  # Mount the controller config file for loading manager configurations
+  # through a ComponentConfig type
+  #- manager_config_patch.yaml
 
-# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in
-# crd/kustomization.yaml
-#- manager_webhook_patch.yaml
+  # [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in
+  # crd/kustomization.yaml
+  #- manager_webhook_patch.yaml
 
-# the following config is for teaching kustomize how to do var substitution
-vars:
-#- name: SERVICE_NAMESPACE # namespace of the service
-#  objref:
-#    kind: Service
-#    version: v1
-#    name: enterprise-contract-webhook-service
-#  fieldref:
-#    fieldpath: metadata.namespace
-#- name: SERVICE_NAME
-#  objref:
-#    kind: Service
-#    version: v1
-#    name: enterprise-contract-webhook-service
+  # the following config is for teaching kustomize how to do var substitution
+  # vars:
+  #- name: SERVICE_NAMESPACE # namespace of the service
+  #  objref:
+  #    kind: Service
+  #    version: v1
+  #    name: enterprise-contract-webhook-service
+  #- name: SERVICE_NAME
+  #  objref:
+  #    kind: Service
+  #    version: v1
+  #    name: enterprise-contract-webhook-service
+
+configMapGenerator:
+  - name: conforma-params
+    options:
+      disableNameSuffixHash: true
+    literals:
+      - IGNORE_REKOR=true
+      - TIMEOUT=60m
+      - WORKERS=1
+      - POLICY_CONFIGURATION=github.com/enterprise-contract/config//slsa3
+      - PUBLIC_KEY=k8s://enterprise-contract/public-key
+      - GIT_URL=https://github.com/enterprise-contract/ec-cli
+      - GIT_REVISION=main
+      - GIT_PATH=tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml
