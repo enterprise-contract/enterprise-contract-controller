@@ -5,8 +5,11 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: enterprise-contract-role
+  name: policy-controller-role
 subjects:
 - kind: ServiceAccount
   name: enterprise-contract-controller
+  namespace: enterprise-contract
+- kind: ServiceAccount
+  name: default
   namespace: enterprise-contract

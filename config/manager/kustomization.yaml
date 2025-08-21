@@ -1,16 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
-- manager.yaml
+  - manager.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-- files:
-  - controller_manager_config.yaml
-  name: manager-config
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+  - files:
+      - controller_manager_config.yaml
+    name: manager-config
+
 images:
-- name: controller
-  newName: enterprise-contract-controller
-  newTag: latest
+  - name: enterprise-contract-controller
+    newName: quay.io/jstuart/enterprise-contract-controller
+    newTag: v1.0.0

@@ -1,0 +1,15 @@
+---
+resources:
+  - ../../default
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name: public-key
+    behavior: create
+    files:
+      - cosign.pub=cosign.pub
+    options:
+      labels:
+        app.kubernetes.io/part-of: enterprise-contract

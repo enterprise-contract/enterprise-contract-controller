@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: enterprisecontractpolicy-editor-role
+  name: policy-editor-role
   labels:
     # Bind this role to users already bound to the "edit" ClusterRole.
     rbac.authorization.k8s.io/aggregate-to-edit: "true"

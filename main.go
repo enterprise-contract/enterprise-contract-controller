@@ -32,8 +32,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	appstudioredhatcomv1alpha1 "github.com/enterprise-contract/enterprise-contract-controller/api/v1alpha1"
 	"github.com/enterprise-contract/enterprise-contract-controller/controllers"
+	tektonv1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -44,8 +44,7 @@ var (
 
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
-
-	utilruntime.Must(appstudioredhatcomv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(tektonv1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -58,6 +57,7 @@ func main() {
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false,
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
+
 	opts := zap.Options{
 		Development: true,
 	}
@@ -78,13 +78,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.EnterpriseContractPolicyReconciler{
+	if err = (&controllers.PipelineRunReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "EnterpriseContractPolicy")
+		setupLog.Error(err, "unable to create controller", "controller", "PipelineRun")
 		os.Exit(1)
 	}
+	
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {

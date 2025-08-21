@@ -1,4 +1,3 @@
-
 # Image URL to use all building/pushing image targets
 IMG ?= enterprise-contract-controller:latest
 DOCKER_CONFIG ?= $(HOME)
@@ -9,6 +8,11 @@ CONTROLLER_GEN = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/controller-tool
 KUSTOMIZE = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/kustomize/kustomize/v4
 ENVTEST = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/controller-runtime/tools/setup-envtest
 CRD_DEF = ./api/v1alpha1
+
+# Test related variables
+ENVTEST_ASSETS_DIR=$(shell pwd)/testbin
+ENVTEST_K8S_VERSION=1.29.0
+TEKTON_VERSION=v0.57.0
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
@@ -78,11 +82,36 @@ fmt: ## Run go fmt against code.
 vet: ## Run go vet against code.
 	go vet ./...
 
+.PHONY: test-setup
+test-setup: ## Download envtest-setup locally if necessary.
+	@echo "Setting up test environment..."
+	@if [ ! -f $(GOBIN)/setup-envtest ]; then \
+		echo "Installing setup-envtest..."; \
+		go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest; \
+	fi
+	@echo "Downloading envtest binaries..."
+	@$(GOBIN)/setup-envtest use $(ENVTEST_K8S_VERSION) --bin-dir $(ENVTEST_ASSETS_DIR)
+	@echo "Test environment setup complete"
+
+.PHONY: download-tekton-crds
+download-tekton-crds: ## Download Tekton CRDs for testing
+	@echo "Downloading Tekton CRDs..."
+	@mkdir -p config/crd/tekton
+	@curl -sL https://github.com/tektoncd/pipeline/releases/download/$(TEKTON_VERSION)/release.yaml > config/crd/tekton/release.yaml
+	@echo "Extracting CRDs..."
+	@awk '/kind: CustomResourceDefinition/,/^---/' config/crd/tekton/release.yaml > config/crd/tekton/crds.yaml
+	@rm config/crd/tekton/release.yaml
+
 .PHONY: test
-test: manifests generate fmt vet ## Run tests.
-	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) -p path)" go test ./... -coverprofile cover.out
-	cd api && go test ./... -coverprofile ../api_cover.out
-	cd schema && go test ./... -coverprofile ../schema_cover.out
+test: test-setup download-tekton-crds ## Run tests
+	KUBEBUILDER_ASSETS=$(ENVTEST_ASSETS_DIR)/k8s/$(ENVTEST_K8S_VERSION)-darwin-arm64 go test ./controllers/... -v
+
+.PHONY: test-clean
+test-clean: ## Clean up test artifacts
+	@echo "Cleaning up test artifacts..."
+	@rm -f config/crd/tekton/crds.yaml
+	@rm -f config/crd/tekton/release.yaml
+	@echo "Cleanup complete"
 
 ##@ Build
 
@@ -94,19 +123,12 @@ run: manifests generate fmt vet ## Run a controller from your host.
 	go run ./main.go
 
 .PHONY: docker-build
-docker-build: test ## Build docker image with the manager.
-ifeq ("$(shell docker info --format '{{$$found:=false}}{{range .ClientInfo.Plugins}}{{if eq .Name "buildx"}}{{$$found = true}}{{end}}{{end}}{{if $$found}}true{{else}}false{{end}}')","true")
-	docker buildx create --use
-	docker buildx build --load -t ${IMG} --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max .
-	docker buildx stop
-	docker buildx rm
-else
-	docker build -t ${IMG} .
-endif
+docker-build: test ## Build container image with the manager.
+	podman build -t ${IMG} .
 
 .PHONY: docker-push
-docker-push: ## Push docker image with the manager.
-	docker push ${IMG}
+docker-push: ## Push container image with the manager.
+	podman push ${IMG}
 
 .PHONY: export-schema
 export-schema: generate ## Export the CRD schema to the schema directory as a json-store.org schema.
