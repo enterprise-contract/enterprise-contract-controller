@@ -3,8 +3,8 @@ module github.com/enterprise-contract/enterprise-contract-controller/schema
 go 1.23.6
 
 require (
-	github.com/enterprise-contract/enterprise-contract-controller/api v0.1.35
-	github.com/invopop/jsonschema v0.12.0
+	github.com/enterprise-contract/enterprise-contract-controller/api v0.1.134
+	github.com/invopop/jsonschema v0.13.0
 )
 
 require (
@@ -18,14 +18,14 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/santhosh-tekuri/jsonschema/v5 v5.3.1
-	github.com/spf13/afero v1.11.0
+	github.com/spf13/afero v1.14.0
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/apiextensions-apiserver v0.29.11
+	k8s.io/apiextensions-apiserver v0.33.4
 	k8s.io/apimachinery v0.29.11 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/utils v0.0.0-20240102154912-e7106e64919e // indirect
