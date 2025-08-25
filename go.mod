@@ -5,11 +5,11 @@ go 1.23.6
 require (
 	github.com/enterprise-contract/enterprise-contract-controller/api v0.0.0-00010101000000-000000000000
 	github.com/onsi/ginkgo v1.16.5
-	github.com/onsi/gomega v1.36.2
-	k8s.io/apimachinery v0.29.11
-	k8s.io/client-go v0.29.11
-	sigs.k8s.io/controller-runtime v0.17.6
-	sigs.k8s.io/yaml v1.4.0
+	github.com/onsi/gomega v1.38.1
+	k8s.io/apimachinery v0.33.4
+	k8s.io/client-go v0.33.4
+	sigs.k8s.io/controller-runtime v0.21.0
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
