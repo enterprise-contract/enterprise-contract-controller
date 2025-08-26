@@ -3,7 +3,7 @@ module github.com/enterprise-contract/enterprise-contract-controller/schema
 go 1.23.6
 
 require (
-	github.com/enterprise-contract/enterprise-contract-controller/api v0.1.35
+	github.com/enterprise-contract/enterprise-contract-controller/api v0.1.134
 	github.com/invopop/jsonschema v0.12.0
 )
 
@@ -25,8 +25,8 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/apiextensions-apiserver v0.29.11
-	k8s.io/apimachinery v0.29.11 // indirect
+	k8s.io/apiextensions-apiserver v0.29.15
+	k8s.io/apimachinery v0.29.15 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/utils v0.0.0-20240102154912-e7106e64919e // indirect
 	sigs.k8s.io/controller-runtime v0.17.6 // indirect
