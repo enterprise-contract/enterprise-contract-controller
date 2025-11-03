@@ -3,7 +3,7 @@ module github.com/enterprise-contract/enterprise-contract-controller/schema
 go 1.23.6
 
 require (
-	github.com/enterprise-contract/enterprise-contract-controller/api v0.1.188
+	github.com/enterprise-contract/enterprise-contract-controller/api v0.1.189
 	github.com/invopop/jsonschema v0.12.0
 )
 
