@@ -205,6 +205,9 @@ Appears In: xref:{anchor_prefix}-github-com-enterprise-contract-enterprise-contr
 ImageRef is used to specify an image by its digest. +
 | *`imageDigest`* __string__ | ImageDigest is used to specify an image by its digest. +
 | *`imageUrl`* __string__ | ImageUrl is used to specify an image by its URL without a tag. +
+| *`componentNames`* __string array__ | ComponentNames is used to specify component names from +
+ApplicationSnapshot. This allows filtering in scenarios where +
+multiple components share the same image repository. +
 | *`reference`* __string__ | Reference is used to include a link to related information such as a Jira issue URL. +
 |===
 
