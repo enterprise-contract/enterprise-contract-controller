@@ -116,6 +116,15 @@ type VolatileCriteria struct {
 	// +kubebuilder:validation:Pattern=`^[a-z0-9][a-z0-9.-]*[a-z0-9](?:\/[a-z0-9][a-z0-9-]*[a-z0-9]){2,}$`
 	ImageUrl string `json:"imageUrl,omitempty"`
 
+	// ComponentNames is used to specify component names from
+	// ApplicationSnapshot. This allows filtering in scenarios where
+	// multiple components share the same image repository.
+	// +optional
+	// +kubebuilder:validation:MinItems:=1
+	// +kubebuilder:validation:items:MinLength=1
+	// +listType:=set
+	ComponentNames []string `json:"componentNames,omitempty"`
+
 	// Reference is used to include a link to related information such as a Jira issue URL.
 	// +optional
 	Reference string `json:"reference,omitempty"`

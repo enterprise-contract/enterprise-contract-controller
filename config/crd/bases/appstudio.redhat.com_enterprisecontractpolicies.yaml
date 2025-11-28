@@ -159,6 +159,17 @@ spec:
                             items:
                               description: VolatileCriteria includes or excludes a policy rule with effective dates as an option.
                               properties:
+                                componentNames:
+                                  description: |-
+                                    ComponentNames is used to specify component names from
+                                    ApplicationSnapshot. This allows filtering in scenarios where
+                                    multiple components share the same image repository.
+                                  items:
+                                    type: string
+                                    minLength: 1
+                                  minItems: 1
+                                  type: array
+                                  x-kubernetes-list-type: set
                                 effectiveOn:
                                   format: date-time
                                   type: string
@@ -195,6 +206,17 @@ spec:
                             items:
                               description: VolatileCriteria includes or excludes a policy rule with effective dates as an option.
                               properties:
+                                componentNames:
+                                  description: |-
+                                    ComponentNames is used to specify component names from
+                                    ApplicationSnapshot. This allows filtering in scenarios where
+                                    multiple components share the same image repository.
+                                  items:
+                                    type: string
+                                    minLength: 1
+                                  minItems: 1
+                                  type: array
+                                  x-kubernetes-list-type: set
                                 effectiveOn:
                                   format: date-time
                                   type: string
