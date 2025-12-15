@@ -6,7 +6,7 @@ require (
 	github.com/elastic/crd-ref-docs v0.1.0
 	sigs.k8s.io/controller-runtime/tools/setup-envtest v0.0.0-20221124082817-e57ce7861d5a
 	sigs.k8s.io/controller-tools v0.14.0
-	sigs.k8s.io/kustomize/kustomize/v4 v4.5.7
+	sigs.k8s.io/kustomize/kustomize/v5 v5.8.0
 )
 
 require (
