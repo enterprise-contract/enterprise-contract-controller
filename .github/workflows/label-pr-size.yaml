@@ -29,4 +29,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Label PR by size
-        uses: conforma/pr-size-label-action@v1.0.0
+        uses: conforma/pr-size-label-action@8b1fcdb87ab3ef4b79f9708fedf686904375e2d3 # v1.0.0
