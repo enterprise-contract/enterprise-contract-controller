@@ -8,6 +8,9 @@ ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 CONTROLLER_GEN = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen
 KUSTOMIZE = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/kustomize/kustomize/v4
 ENVTEST = go run -modfile $(ROOT)tools/go.mod sigs.k8s.io/controller-runtime/tools/setup-envtest
+# Kubernetes version for envtest binaries (etcd, kube-apiserver); matches the
+# k8s.io/api version the controller targets.
+ENVTEST_K8S_VERSION ?= 1.29.0
 CRD_DEF = ./api/v1alpha1
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
