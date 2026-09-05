@@ -22,7 +22,7 @@ name: 'Auto merge'
 
 jobs:
   auto-merge:
-    uses: conforma/github-workflows/.github/workflows/auto-merge.yaml@db8c967cda18f9d4c69b1808f703fb61cdf1c650 # main
+    uses: conforma/github-workflows/.github/workflows/auto-merge.yaml@eb2bb495b1fca0a52cc1a1e2bfb1c28a6283798a # main
     secrets: inherit
     permissions:
       pull-requests: write
