@@ -33,7 +33,7 @@ jobs:
           cache-dependency-path: '**/go.sum'
 
       - name: Check go versions
-        uses: conforma/github-workflows/golang-version-check@ec0149415aa96be16a381c5905501cb38c88041b # main
+        uses: conforma/github-workflows/golang-version-check@51213ed2e43b070e03cb7f49f20d9d60e7575b01 # main
 
       - name: Build all
         run: make all
